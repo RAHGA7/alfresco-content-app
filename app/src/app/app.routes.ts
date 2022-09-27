@@ -73,6 +73,7 @@ export const APP_ROUTES: Routes = [
       }
     ]
   },
+
   {
     path: '',
     component: AppLayoutComponent,

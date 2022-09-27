@@ -100,7 +100,6 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.loadAppSettings();
-
     this.loadCustomCss();
     this.loadCustomWebFont();
 
@@ -119,12 +118,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.routerExtensionService.mapExtensionRoutes();
 
+    // service
     this.uploadService.fileUploadError.subscribe((error) => this.onFileUploadedError(error));
 
+    // service
     this.sharedLinksApiService.error.pipe(takeUntil(this.onDestroy$)).subscribe((err: { message: string }) => {
       this.store.dispatch(new SnackbarErrorAction(err.message));
     });
 
+    // service
     this.appService.ready$.pipe(takeUntil(this.onDestroy$)).subscribe((isReady) => {
       if (isReady) {
         this.loadRepositoryStatus();

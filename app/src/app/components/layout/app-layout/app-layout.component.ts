@@ -83,6 +83,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
       this.expandedSidenav = false;
     }
 
+    // async in html
     this.store
       .select(getCurrentFolder)
       .pipe(takeUntil(this.onDestroy$))
@@ -122,6 +123,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
         this.store.dispatch(new ResetSelectionAction());
       });
 
+    // change to async in html?
     this.store
       .select(getFileUploadingDialog)
       .pipe(delay(0), takeUntil(this.onDestroy$))
@@ -142,6 +144,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
+  // updateLayoutState
   private updateState() {
     if (this.minimizeSidenav && !this.layout.isMenuMinimized) {
       this.layout.isMenuMinimized = true;
@@ -164,6 +167,7 @@ export class AppLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
+  // private isSidenavExpanded(): boolean {
   private getSidenavState(): boolean {
     const expand = this.appConfigService.get<boolean>('sideNav.expandedSidenav', true);
     const preserveState = this.appConfigService.get<boolean>('sideNav.preserveState', true);

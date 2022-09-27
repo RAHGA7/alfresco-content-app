@@ -23,17 +23,47 @@
  * along with Alfresco. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Injectable } from '@angular/core';
-import { AuthenticationService, AppConfigService } from '@alfresco/adf-core';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { SearchQueryBuilderService } from '@alfresco/adf-content-services';
+import { Injectable, InjectionToken } from '@angular/core';
+import { AuthenticationService, AppConfigService, AlfrescoApiService } from '@alfresco/adf-core';
+import { Observable, BehaviorSubject, Subject, from, combineLatest } from 'rxjs';
+import { GroupService, SearchQueryBuilderService } from '@alfresco/adf-content-services';
+import { DiscoveryEntry, Group, Person } from '@alfresco/js-api';
+import { map, switchMap } from 'rxjs/operators';
+import { ContentApiService } from './content-api.service';
+
+export interface InitialAppComponentService {
+  // init(): void;
+  isLoggedIn(): boolean; // Observable
+  apiError$: Observable<{ status: number; response: any }>;
+  // setUp()
+  appData$: Observable<{
+    profileData: {
+      person: Person;
+      groups: Group[];
+    };
+    repositoryData: DiscoveryEntry;
+  }>;
+}
+
+export const INITIAL_APP_COMPONENT_SERVICE = new InjectionToken<InitialAppComponentService>('INITIAL_APP_COMPONENT_SERVICE');
 
 @Injectable({
   providedIn: 'root'
 })
-export class AppService {
+export class AppService implements InitialAppComponentService {
   private ready: BehaviorSubject<boolean>;
   ready$: Observable<boolean>;
+
+  private apiErrorSubject$ = new Subject<{ status: number; response: any }>();
+  apiError$ = this.apiErrorSubject$.asObservable();
+
+  appData$: Observable<{
+    profileData: {
+      person: Person;
+      groups: Group[];
+    };
+    repositoryData: DiscoveryEntry;
+  }>;
 
   /**
    * Whether `withCredentials` mode is enabled.
@@ -43,16 +73,55 @@ export class AppService {
     return this.config.get<boolean>('auth.withCredentials', false);
   }
 
-  constructor(auth: AuthenticationService, private config: AppConfigService, searchQueryBuilderService: SearchQueryBuilderService) {
+  constructor(
+    private auth: AuthenticationService,
+    private config: AppConfigService,
+    searchQueryBuilderService: SearchQueryBuilderService,
+    private alfrescoApiService: AlfrescoApiService,
+    private groupService: GroupService,
+    private contentApi: ContentApiService
+  ) {
     this.ready = new BehaviorSubject(auth.isLoggedIn() || this.withCredentials);
     this.ready$ = this.ready.asObservable();
 
-    auth.onLogin.subscribe(() => {
+    this.alfrescoApiService.getInstance().on('error', (error: { status: number; response: any }) => {
+      if (!this.alfrescoApiService.isExcludedErrorListener(error?.response?.req?.url)) {
+        this.apiErrorSubject$.next(error);
+      }
+    });
+
+    this.appData$ = this.auth.onLogin.pipe(
+      switchMap(() => combineLatest([this.loadUserProfile(), this.loadRepositoryStatus()])),
+      map(([profileData, repositoryData]) => ({
+        profileData,
+        repositoryData
+      }))
+    );
+
+    this.auth.onLogin.subscribe(() => {
       this.ready.next(true);
     });
 
-    auth.onLogout.subscribe(() => {
+    this.auth.onLogout.subscribe(() => {
       searchQueryBuilderService.resetToDefaults();
     });
+  }
+
+  isLoggedIn(): boolean {
+    return this.auth.isLoggedIn();
+  }
+
+  loadUserProfile(): Observable<{ person: Person; groups: Group[] }> {
+    const groupsEntries$ = from(this.groupService.listAllGroupMembershipsForPerson('-me-', { maxItems: 250 })).pipe(
+      map((groupsEntries) => (groupsEntries?.length ? groupsEntries.map((obj) => obj.entry) : []))
+    );
+
+    const person$ = this.contentApi.getPerson('-me-');
+
+    return combineLatest([person$, groupsEntries$]).pipe(map(([person, groups]) => ({ person: person.entry, groups })));
+  }
+
+  loadRepositoryStatus(): Observable<DiscoveryEntry> {
+    return this.contentApi.getRepositoryInformation();
   }
 }

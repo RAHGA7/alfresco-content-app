@@ -2382,60 +2382,7 @@
           "order": 60
         }
       ],
-      "trashcan": [
-        {
-          "id": "app.trashcan.thumbnail",
-          "key": "$thumbnail",
-          "type": "image",
-          "sortable": false,
-          "desktopOnly": false,
-          "order": 10
-        },
-        {
-          "id": "app.trashcan.name",
-          "key": "name",
-          "title": "APP.DOCUMENT_LIST.COLUMNS.NAME",
-          "type": "text",
-          "class": "adf-ellipsis-cell adf-expand-cell-5",
-          "sortable": true,
-          "template": "app.columns.trashcanName",
-          "desktopOnly": false,
-          "order": 20
-        },
-        {
-          "id": "app.trashcan.location",
-          "key": "path.name",
-          "title": "APP.DOCUMENT_LIST.COLUMNS.LOCATION",
-          "type": "text",
-          "class": "adf-ellipsis-cell adf-no-grow-cell",
-          "sortable": true,
-          "template": "app.columns.location",
-          "desktopOnly": true,
-          "order": 30
-        },
-        {
-          "id": "app.trashcan.size",
-          "key": "content.sizeInBytes",
-          "sortingKey": "sizeInBytes",
-          "title": "APP.DOCUMENT_LIST.COLUMNS.SIZE",
-          "type": "fileSize",
-          "class": "adf-no-grow-cell adf-ellipsis-cell",
-          "sortable": true,
-          "desktopOnly": true,
-          "order": 40
-        },
-        {
-          "id": "app.trashcan.deletedOn",
-          "key": "archivedAt",
-          "title": "APP.DOCUMENT_LIST.COLUMNS.DELETED_ON",
-          "type": "date",
-          "format": "timeAgo",
-          "class": "adf-ellipsis-cell",
-          "sortable": true,
-          "desktopOnly": true,
-          "order": 50
-        }
-      ],
+
       "search-libraries": [
         {
           "id": "app.libraries.thumbnail",

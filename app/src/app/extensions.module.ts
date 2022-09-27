@@ -32,6 +32,7 @@ import { environment } from '../environments/environment';
 
 @NgModule({
   imports: [
+    // ContentServicesExtensionModule,
     AosExtensionModule,
     ...(environment.devTools ? [AcaSettingsModule] : []),
     AcaAboutModule.forRoot(environment.production),
