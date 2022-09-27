@@ -27,7 +27,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, ActivationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
-import { INITIAL_APP_STATE } from '../../../../../../../app/src/app/store/initial-state';
+
+// Cannot depend on apps
+import { INITIAL_APP_STATE } from '../../../../../../../app/src/app/content-plugin/store/initial-state';
 import {
   CloseModalDialogsAction,
   AppStore,

@@ -24,22 +24,22 @@
  */
 
 import { Routes } from '@angular/router';
-import { AppLayoutComponent } from './components/layout/app-layout/app-layout.component';
-import { FilesComponent } from './components/files/files.component';
-import { LibrariesComponent } from './components/libraries/libraries.component';
-import { FavoriteLibrariesComponent } from './components/favorite-libraries/favorite-libraries.component';
-import { SearchResultsComponent } from './components/search/search-results/search-results.component';
-import { SearchLibrariesResultsComponent } from './components/search/search-libraries-results/search-libraries-results.component';
-import { LoginComponent } from './components/login/login.component';
+import { AppLayoutComponent } from './content-plugin/components/layout/app-layout/app-layout.component';
+import { FilesComponent } from './content-plugin/components/files/files.component';
+import { LibrariesComponent } from './content-plugin/components/libraries/libraries.component';
+import { FavoriteLibrariesComponent } from './content-plugin/components/favorite-libraries/favorite-libraries.component';
+import { SearchResultsComponent } from './content-plugin/components/search/search-results/search-results.component';
+import { SearchLibrariesResultsComponent } from './content-plugin/components/search/search-libraries-results/search-libraries-results.component';
+import { LoginComponent } from './content-plugin/components/login/login.component';
 import { AppSharedRuleGuard, GenericErrorComponent, ExtensionsDataLoaderGuard } from '@alfresco/aca-shared';
 import { AuthGuard, BlankPageComponent } from '@alfresco/adf-core';
-import { FavoritesComponent } from './components/favorites/favorites.component';
-import { RecentFilesComponent } from './components/recent-files/recent-files.component';
-import { SharedFilesComponent } from './components/shared-files/shared-files.component';
-import { DetailsComponent } from './components/details/details.component';
-import { HomeComponent } from './components/home/home.component';
-import { ViewProfileComponent } from './components/view-profile/view-profile.component';
-import { ViewProfileRuleGuard } from './components/view-profile/view-profile.guard';
+import { FavoritesComponent } from './content-plugin/components/favorites/favorites.component';
+import { RecentFilesComponent } from './content-plugin/components/recent-files/recent-files.component';
+import { SharedFilesComponent } from './content-plugin/components/shared-files/shared-files.component';
+import { DetailsComponent } from './content-plugin/components/details/details.component';
+import { HomeComponent } from './content-plugin/components/home/home.component';
+import { ViewProfileComponent } from './content-plugin/components/view-profile/view-profile.component';
+import { ViewProfileRuleGuard } from './content-plugin/components/view-profile/view-profile.guard';
 
 export const APP_ROUTES: Routes = [
   {
@@ -55,7 +55,7 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'preview/s/:id',
-    loadChildren: () => import('./components/shared-link-view/shared-link-view.module').then((m) => m.AppSharedLinkViewModule)
+    loadChildren: () => import('./content-plugin/components/shared-link-view/shared-link-view.module').then((m) => m.AppSharedLinkViewModule)
   },
   {
     path: 'view',
@@ -67,7 +67,7 @@ export const APP_ROUTES: Routes = [
         children: [
           {
             path: '',
-            loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
           }
         ]
       }
@@ -122,7 +122,7 @@ export const APP_ROUTES: Routes = [
           // deprecated, backwards compatibility with ACA 1.8
           {
             path: 'preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+            loadChildren: () => import('./content-plugin/components/preview/preview.module').then((m) => m.PreviewModule),
             data: {
               navigateSource: 'personal-files'
             }
@@ -136,7 +136,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'personal-files'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           },
@@ -149,7 +149,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'personal-files'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           }
@@ -175,14 +175,14 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'personal-files'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           },
           // deprecated, backwards compatibility with ACA 1.8
           {
             path: 'preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+            loadChildren: () => import('./content-plugin/components/preview/preview.module').then((m) => m.PreviewModule),
             data: {
               navigateSource: 'personal-files'
             }
@@ -190,7 +190,7 @@ export const APP_ROUTES: Routes = [
           // deprecated, backwards compatibility with ACA 1.8
           {
             path: ':folderId/preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+            loadChildren: () => import('./content-plugin/components/preview/preview.module').then((m) => m.PreviewModule),
             data: {
               navigateSource: 'personal-files'
             }
@@ -204,7 +204,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'personal-files'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           }
@@ -237,7 +237,7 @@ export const APP_ROUTES: Routes = [
           // deprecated, backwards compatibility with ACA 1.8
           {
             path: 'preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+            loadChildren: () => import('./content-plugin/components/preview/preview.module').then((m) => m.PreviewModule),
             data: {
               navigateSource: 'libraries'
             }
@@ -251,7 +251,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'libraries'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           },
@@ -264,7 +264,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'libraries'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           }
@@ -308,7 +308,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'libraries'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           },
@@ -321,7 +321,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'libraries'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           }
@@ -346,7 +346,7 @@ export const APP_ROUTES: Routes = [
           // deprecated, backwards compatibility with ACA 1.8
           {
             path: 'preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+            loadChildren: () => import('./content-plugin/components/preview/preview.module').then((m) => m.PreviewModule),
             data: {
               navigateSource: 'favorites'
             }
@@ -360,7 +360,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'favorites'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           },
@@ -373,7 +373,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'favorites'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           }
@@ -397,7 +397,7 @@ export const APP_ROUTES: Routes = [
           // deprecated, backwards compatibility with ACA 1.8
           {
             path: 'preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+            loadChildren: () => import('./content-plugin/components/preview/preview.module').then((m) => m.PreviewModule),
             data: {
               navigateSource: 'recent-files'
             }
@@ -411,7 +411,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'recent-files'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           },
@@ -424,7 +424,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'recent-files'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           }
@@ -446,7 +446,7 @@ export const APP_ROUTES: Routes = [
           // deprecated, backwards compatibility with ACA 1.8
           {
             path: 'preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+            loadChildren: () => import('./content-plugin/components/preview/preview.module').then((m) => m.PreviewModule),
             data: {
               navigateSource: 'shared'
             }
@@ -460,7 +460,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'shared'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           },
@@ -473,7 +473,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'shared'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           }
@@ -483,7 +483,7 @@ export const APP_ROUTES: Routes = [
       },
       {
         path: 'trashcan',
-        loadChildren: () => import('./components/trashcan/trashcan.module').then((m) => m.AppTrashcanModule)
+        loadChildren: () => import('./content-plugin/components/trashcan/trashcan.module').then((m) => m.AppTrashcanModule)
       },
       {
         path: 'search',
@@ -498,7 +498,7 @@ export const APP_ROUTES: Routes = [
           // deprecated, backwards compatibility with ACA 1.8
           {
             path: 'preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+            loadChildren: () => import('./content-plugin/components/preview/preview.module').then((m) => m.PreviewModule),
             data: {
               navigateSource: 'search'
             }
@@ -512,7 +512,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'search'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           },
@@ -525,7 +525,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'search'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           }
@@ -550,7 +550,7 @@ export const APP_ROUTES: Routes = [
                 data: {
                   navigateSource: 'search'
                 },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+                loadChildren: () => import('./content-plugin/components/viewer/viewer.module').then((m) => m.AppViewerModule)
               }
             ]
           }

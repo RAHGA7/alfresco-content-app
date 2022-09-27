@@ -28,7 +28,7 @@ import { NgModule } from '@angular/core';
 import { CustomNameColumnComponent } from './name-column/name-column.component';
 import { LockedByModule } from '@alfresco/aca-shared';
 import { ContentModule } from '@alfresco/adf-content-services';
-import { MaterialModule } from '../../material.module';
+import { MaterialModule } from '../../../material.module';
 import { CoreModule } from '@alfresco/adf-core';
 import { ThumbnailColumnComponent } from './thumbnail-column/thumbnail-column.component';
 

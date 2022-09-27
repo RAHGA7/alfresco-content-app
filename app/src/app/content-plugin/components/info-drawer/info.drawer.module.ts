@@ -29,7 +29,7 @@ import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { DirectivesModule } from '../../directives/directives.module';
-import { MaterialModule } from '../../material.module';
+import { MaterialModule } from '../../../material.module';
 import { CommentsTabComponent } from './comments-tab/comments-tab.component';
 import { MetadataTabComponent } from './metadata-tab/metadata-tab.component';
 import { LibraryMetadataTabComponent } from './library-metadata-tab/library-metadata-tab.component';
