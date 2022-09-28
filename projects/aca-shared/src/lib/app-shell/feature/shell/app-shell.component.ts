@@ -22,26 +22,15 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with Alfresco. If not, see <http://www.gnu.org/licenses/>.
  */
-import { AppConfigService, PageTitleService } from '@alfresco/adf-core';
+import { PageTitleService } from '@alfresco/adf-core';
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, ActivationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { filter } from 'rxjs/operators';
+import { filter, take } from 'rxjs/operators';
 
 // Cannot depend on apps
-import { INITIAL_APP_STATE } from '../../../../../../../app/src/app/content-plugin/store/initial-state';
-import {
-  CloseModalDialogsAction,
-  AppStore,
-  getCustomCssPath,
-  getCustomWebFontPath,
-  AppState,
-  SetInitialStateAction,
-  SetCurrentUrlAction,
-  SetRepositoryInfoAction,
-  SetUserProfileAction
-} from '../../../../../store/src/public-api';
-import { INITIAL_APP_COMPONENT_SERVICE, InitialAppComponentService as ShellAppService } from '../../../services/app.service';
+import { CloseModalDialogsAction, AppStore, SetCurrentUrlAction } from '../../../../../store/src/public-api';
+import { INITIAL_APP_COMPONENT_SERVICE, ShellAppService } from '../../../services/app.service';
 import { RouterExtensionService } from '../../../services/router.extension.service';
 
 @Component({
@@ -54,93 +43,35 @@ export class AppShellComponent implements OnInit {
 
   constructor(
     @Inject(INITIAL_APP_COMPONENT_SERVICE) private shellAppService: ShellAppService,
-    // private appService: AppService,
     private store: Store<AppStore>,
     private router: Router,
     private route: ActivatedRoute,
-    private config: AppConfigService,
     private pageTitle: PageTitleService,
     private routerExtensionService: RouterExtensionService
   ) {}
 
   ngOnInit() {
-    // extensionService = layout
-
-    // this.shellAppService.init();
-
     this.shellAppService.apiError$.subscribe((error) => {
-      if (!this.shellAppService.isLoggedIn() && error.status === 401) {
-        this.store.dispatch(new CloseModalDialogsAction());
-
-        let redirectUrl = this.route.snapshot.queryParams['redirectUrl'];
-        if (!redirectUrl) {
-          redirectUrl = this.router.url;
-        }
-
-        this.router.navigate(['/login'], {
-          queryParams: { redirectUrl }
-        });
-      }
+      this.handleApiError(error);
     });
 
-    this.loadAppSettings();
-    this.loadCustomCss();
-    this.loadCustomWebFont();
+    this.shellAppService.customCss$?.pipe(take(1)).subscribe((cssPath) => {
+      this.createLink(cssPath);
+    });
+
+    this.shellAppService.customWebFont$?.pipe(take(1)).subscribe((webFontPath) => {
+      this.createLink(webFontPath);
+    });
+
+    this.shellAppService.loadAppSettings();
+
     this.routerExtensionService.mapExtensionRoutes();
 
     this.router.events
       .pipe(filter((event) => event instanceof ActivationEnd && event.snapshot.children.length === 0))
       .subscribe((event: ActivationEnd) => {
-        const snapshot: any = event.snapshot ?? {};
-        const data: any = snapshot.data ?? {};
-
-        this.pageHeading = data.title ?? '';
-        this.pageTitle.setTitle(data.title ?? '');
-        this.store.dispatch(new SetCurrentUrlAction(this.router.url));
+        this.onRouterActivationEnd(event);
       });
-
-    // repositoryData - DiscoveryEntry - change to my type or needed??
-    this.shellAppService.appData$.subscribe(({ profileData, repositoryData }) => {
-      this.store.dispatch(new SetRepositoryInfoAction(repositoryData.entry.repository));
-      this.store.dispatch(new SetUserProfileAction(profileData));
-    });
-  }
-
-  private loadCustomCss(): void {
-    this.store.select(getCustomCssPath).subscribe((cssPath) => {
-      if (cssPath) {
-        this.createLink(cssPath);
-      }
-    });
-  }
-
-  private loadCustomWebFont(): void {
-    this.store.select(getCustomWebFontPath).subscribe((fontUrl) => {
-      if (fontUrl) {
-        this.createLink(fontUrl);
-      }
-    });
-  }
-
-  private loadAppSettings() {
-    let baseShareUrl = this.config.get<string>('baseShareUrl');
-    if (!baseShareUrl.endsWith('/')) {
-      baseShareUrl += '/';
-    }
-
-    const state: AppState = {
-      ...INITIAL_APP_STATE,
-      appName: this.config.get<string>('application.name'),
-      headerColor: this.config.get<string>('headerColor'),
-      headerTextColor: this.config.get<string>('headerTextColor', '#000000'),
-      logoPath: this.config.get<string>('application.logo'),
-      headerImagePath: this.config.get<string>('application.headerImagePath'),
-      customCssPath: this.config.get<string>('customCssPath'),
-      webFontPath: this.config.get<string>('webFontPath'),
-      sharedUrl: baseShareUrl
-    };
-
-    this.store.dispatch(new SetInitialStateAction(state));
   }
 
   private createLink(url: string): void {
@@ -149,5 +80,29 @@ export class AppShellComponent implements OnInit {
     cssLinkElement.setAttribute('type', 'text/css');
     cssLinkElement.setAttribute('href', url);
     document.head.appendChild(cssLinkElement);
+  }
+
+  private handleApiError(error: { status: number; response: any }): void {
+    if (!this.shellAppService.isLoggedIn() && error.status === 401) {
+      this.store.dispatch(new CloseModalDialogsAction());
+
+      let redirectUrl = this.route.snapshot.queryParams['redirectUrl'];
+      if (!redirectUrl) {
+        redirectUrl = this.router.url;
+      }
+
+      this.router.navigate(['/login'], {
+        queryParams: { redirectUrl }
+      });
+    }
+  }
+
+  private onRouterActivationEnd(event: ActivationEnd): void {
+    const snapshot: any = event.snapshot ?? {};
+    const data: any = snapshot.data ?? {};
+
+    this.pageHeading = data.title ?? '';
+    this.pageTitle.setTitle(data.title ?? '');
+    this.store.dispatch(new SetCurrentUrlAction(this.router.url));
   }
 }

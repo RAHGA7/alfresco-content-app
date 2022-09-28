@@ -30,12 +30,25 @@ import { GroupService, SearchQueryBuilderService } from '@alfresco/adf-content-s
 import { DiscoveryEntry, Group, Person } from '@alfresco/js-api';
 import { map, switchMap } from 'rxjs/operators';
 import { ContentApiService } from './content-api.service';
+import {
+  AppState,
+  AppStore,
+  getCustomCssPath,
+  getCustomWebFontPath,
+  SetInitialStateAction,
+  SetRepositoryInfoAction,
+  SetUserProfileAction
+} from '../../../store/src/public-api';
+import { Store } from '@ngrx/store';
+import { INITIAL_APP_STATE } from '../../../../../app/src/app/content-plugin/store/initial-state';
 
-export interface InitialAppComponentService {
-  // init(): void;
+export interface ShellAppService {
   isLoggedIn(): boolean; // Observable
+  loadAppSettings(): void;
+
+  customCss$?: Observable<string>;
+  customWebFont$?: Observable<string>;
   apiError$: Observable<{ status: number; response: any }>;
-  // setUp()
   appData$: Observable<{
     profileData: {
       person: Person;
@@ -45,17 +58,20 @@ export interface InitialAppComponentService {
   }>;
 }
 
-export const INITIAL_APP_COMPONENT_SERVICE = new InjectionToken<InitialAppComponentService>('INITIAL_APP_COMPONENT_SERVICE');
+export const INITIAL_APP_COMPONENT_SERVICE = new InjectionToken<ShellAppService>('INITIAL_APP_COMPONENT_SERVICE');
 
 @Injectable({
   providedIn: 'root'
 })
-export class AppService implements InitialAppComponentService {
+export class AppService implements ShellAppService {
   private ready: BehaviorSubject<boolean>;
   ready$: Observable<boolean>;
 
   private apiErrorSubject$ = new Subject<{ status: number; response: any }>();
   apiError$ = this.apiErrorSubject$.asObservable();
+
+  customCss$: Observable<string>;
+  customWebFont$: Observable<string>;
 
   appData$: Observable<{
     profileData: {
@@ -79,7 +95,8 @@ export class AppService implements InitialAppComponentService {
     searchQueryBuilderService: SearchQueryBuilderService,
     private alfrescoApiService: AlfrescoApiService,
     private groupService: GroupService,
-    private contentApi: ContentApiService
+    private contentApi: ContentApiService,
+    private store: Store<AppStore>
   ) {
     this.ready = new BehaviorSubject(auth.isLoggedIn() || this.withCredentials);
     this.ready$ = this.ready.asObservable();
@@ -98,6 +115,14 @@ export class AppService implements InitialAppComponentService {
       }))
     );
 
+    this.appData$.subscribe(({ profileData, repositoryData }) => {
+      this.store.dispatch(new SetRepositoryInfoAction(repositoryData.entry.repository));
+      this.store.dispatch(new SetUserProfileAction(profileData));
+    });
+
+    this.customCss$ = this.store.select(getCustomCssPath);
+    this.customWebFont$ = this.store.select(getCustomWebFontPath);
+
     this.auth.onLogin.subscribe(() => {
       this.ready.next(true);
     });
@@ -107,11 +132,32 @@ export class AppService implements InitialAppComponentService {
     });
   }
 
+  loadAppSettings() {
+    let baseShareUrl = this.config.get<string>('baseShareUrl');
+    if (!baseShareUrl.endsWith('/')) {
+      baseShareUrl += '/';
+    }
+
+    const state: AppState = {
+      ...INITIAL_APP_STATE,
+      appName: this.config.get<string>('application.name'),
+      headerColor: this.config.get<string>('headerColor'),
+      headerTextColor: this.config.get<string>('headerTextColor', '#000000'),
+      logoPath: this.config.get<string>('application.logo'),
+      headerImagePath: this.config.get<string>('application.headerImagePath'),
+      customCssPath: this.config.get<string>('customCssPath'),
+      webFontPath: this.config.get<string>('webFontPath'),
+      sharedUrl: baseShareUrl
+    };
+
+    this.store.dispatch(new SetInitialStateAction(state));
+  }
+
   isLoggedIn(): boolean {
     return this.auth.isLoggedIn();
   }
 
-  loadUserProfile(): Observable<{ person: Person; groups: Group[] }> {
+  private loadUserProfile(): Observable<{ person: Person; groups: Group[] }> {
     const groupsEntries$ = from(this.groupService.listAllGroupMembershipsForPerson('-me-', { maxItems: 250 })).pipe(
       map((groupsEntries) => (groupsEntries?.length ? groupsEntries.map((obj) => obj.entry) : []))
     );
@@ -121,7 +167,7 @@ export class AppService implements InitialAppComponentService {
     return combineLatest([person$, groupsEntries$]).pipe(map(([person, groups]) => ({ person: person.entry, groups })));
   }
 
-  loadRepositoryStatus(): Observable<DiscoveryEntry> {
+  private loadRepositoryStatus(): Observable<DiscoveryEntry> {
     return this.contentApi.getRepositoryInformation();
   }
 }
