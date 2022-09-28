@@ -29,10 +29,11 @@ import { AcaAboutModule } from '@alfresco/aca-about';
 import { AcaSettingsModule } from '@alfresco/aca-settings';
 import { AcaFolderRulesModule } from '@alfresco/aca-folder-rules';
 import { environment } from '../environments/environment';
+import { ContentServiceExtensionModule } from './content-plugin/content-services-extension.module';
 
 @NgModule({
   imports: [
-    // ContentServicesExtensionModule,
+    ContentServiceExtensionModule,
     AosExtensionModule,
     ...(environment.devTools ? [AcaSettingsModule] : []),
     AcaAboutModule.forRoot(environment.production),

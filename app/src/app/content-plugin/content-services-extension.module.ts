@@ -30,7 +30,7 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TRANSLATION_PROVIDER, CoreModule, AppConfigService, DebugAppConfigService } from '@alfresco/adf-core';
 import { ContentModule, ContentVersionService } from '@alfresco/adf-content-services';
-import { AppService, INITIAL_APP_COMPONENT_SERVICE, SharedModule } from '@alfresco/aca-shared';
+import { SharedModule } from '@alfresco/aca-shared';
 
 import { APP_ROUTES } from '../app.routes';
 
@@ -41,8 +41,8 @@ import { ViewProfileModule } from './components/view-profile/view-profile.module
 
 import { AppStoreModule } from './store/app-store.module';
 import { MaterialModule } from '../material.module';
-import { AppExtensionsModule } from '../extensions.module';
-import { ACA_COMPONENTS, CONTENT_SERVICE_SETTINGS_TOKEN, CoreExtensionsModule } from './extensions/core.extensions.module';
+// import { AppExtensionsModule } from '../extensions.module';
+import { CoreExtensionsModule } from './extensions/core.extensions.module';
 import { AppInfoDrawerModule } from './components/info-drawer/info.drawer.module';
 import { DirectivesModule } from './directives/directives.module';
 import { ContextMenuModule } from './components/context-menu/context-menu.module';
@@ -116,13 +116,16 @@ registerLocaleData(localeSv);
       relativeLinkResolution: 'legacy'
     }),
     MaterialModule,
+    AppStoreModule,
+
+    // for child?
     CoreModule.forRoot(),
     ContentModule.forRoot(),
     SharedModule.forRoot(),
-    AppStoreModule,
     CoreExtensionsModule.forRoot(),
     ExtensionsModule.forRoot(),
-    AppExtensionsModule,
+
+    // AppExtensionsModule,
     AppLoginModule,
     AppCommonModule,
     AppLayoutModule,
@@ -153,8 +156,8 @@ registerLocaleData(localeSv);
     HomeComponent
   ],
   providers: [
-    { provide: INITIAL_APP_COMPONENT_SERVICE, useClass: AppService },
-    { provide: CONTENT_SERVICE_SETTINGS_TOKEN, useValue: ACA_COMPONENTS },
+    // { provide: INITIAL_APP_COMPONENT_SERVICE, useClass: AppService },
+    // { provide: CONTENT_SERVICE_SETTINGS_TOKEN, useValue: ACA_COMPONENTS },
     { provide: AppConfigService, useClass: DebugAppConfigService },
     { provide: ContentVersionService, useClass: ContentUrlService },
     {

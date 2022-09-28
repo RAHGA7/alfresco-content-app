@@ -23,44 +23,20 @@
  * along with Alfresco. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { BrowserModule, HammerModule } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TRANSLATION_PROVIDER, CoreModule, AppConfigService, DebugAppConfigService, ContextMenuModule } from '@alfresco/adf-core';
+
+import { TRANSLATION_PROVIDER, AppConfigService, DebugAppConfigService, CoreModule } from '@alfresco/adf-core';
 import { ContentModule, ContentVersionService } from '@alfresco/adf-content-services';
 import { AppService, INITIAL_APP_COMPONENT_SERVICE, SharedModule } from '@alfresco/aca-shared';
 
 // import { AppComponent } from './app.component';
 import { APP_ROUTES } from './app.routes';
 
-import { FilesComponent } from './content-plugin/components/files/files.component';
-import { LibrariesComponent } from './content-plugin/components/libraries/libraries.component';
-import { FavoriteLibrariesComponent } from './content-plugin/components/favorite-libraries/favorite-libraries.component';
-import { ViewProfileModule } from './content-plugin/components/view-profile/view-profile.module';
-
-import { MaterialModule } from './material.module';
 import { AppExtensionsModule } from './extensions.module';
-import { AppInfoDrawerModule } from './content-plugin/components/info-drawer/info.drawer.module';
-import { ExtensionsModule } from '@alfresco/adf-extensions';
-import { AppToolbarModule } from './content-plugin/components/toolbar/toolbar.module';
-import { AppCreateMenuModule } from './content-plugin/components/create-menu/create-menu.module';
-import { AppSidenavModule } from './content-plugin/components/sidenav/sidenav.module';
-import { AppCommonModule } from './content-plugin/components/common/common.module';
-import { AppLayoutModule } from './content-plugin/components/layout/layout.module';
-import { AppSearchInputModule } from './content-plugin/components/search/search-input.module';
-import { DocumentListCustomComponentsModule } from './content-plugin/components/dl-custom-components/document-list-custom-components.module';
-import { AppSearchResultsModule } from './content-plugin/components/search/search-results.module';
-import { AppLoginModule } from './content-plugin/components/login/login.module';
-import { AppHeaderModule } from './content-plugin/components/header/header.module';
-import { AppNodeVersionModule } from './content-plugin/components/node-version/node-version.module';
-import { FavoritesComponent } from './content-plugin/components/favorites/favorites.component';
-import { RecentFilesComponent } from './content-plugin/components/recent-files/recent-files.component';
-import { SharedFilesComponent } from './content-plugin/components/shared-files/shared-files.component';
 import { environment } from '../environments/environment';
-import { DetailsComponent } from './content-plugin/components/details/details.component';
-import { HomeComponent } from './content-plugin/components/home/home.component';
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
@@ -79,13 +55,10 @@ import localePl from '@angular/common/locales/pl';
 import localeFi from '@angular/common/locales/fi';
 import localeDa from '@angular/common/locales/da';
 import localeSv from '@angular/common/locales/sv';
-import { AppShellModule } from '../../../projects/aca-shared/src/lib/app-shell/feature/app-shell.module';
 import { AppShellComponent } from '../../../projects/aca-shared/src/lib/app-shell/feature/shell/app-shell.component';
-import { DirectivesModule } from './content-plugin/directives/directives.module';
-import { CoreExtensionsModule, CONTENT_SERVICE_SETTINGS_TOKEN, ACA_COMPONENTS } from './content-plugin/extensions/core.extensions.module';
-import { AppStoreModule } from './content-plugin/store/app-store.module';
-import { CreateFromTemplateDialogComponent } from './content-plugin/dialogs/node-template/create-from-template.dialog';
+import { CONTENT_SERVICE_SETTINGS_TOKEN, ACA_COMPONENTS } from './content-plugin/extensions/core.extensions.module';
 import { ContentUrlService } from './content-plugin/services/content-url.service';
+import { AppShellModule } from '../../../projects/aca-shared/src/lib/app-shell/feature/app-shell.module';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -107,51 +80,56 @@ registerLocaleData(localeSv);
 @NgModule({
   imports: [
     BrowserModule,
+
+    CoreModule.forRoot(),
+    ContentModule.forRoot(),
+    SharedModule.forRoot(),
+
     environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
+    // FormsModule,
+    // ReactiveFormsModule,
     RouterModule.forRoot(APP_ROUTES, {
       useHash: true,
       enableTracing: false, // enable for debug only
       relativeLinkResolution: 'legacy'
     }),
-    MaterialModule,
-    CoreModule.forRoot(),
-    ContentModule.forRoot(),
-    SharedModule.forRoot(),
-    AppStoreModule,
-    CoreExtensionsModule.forRoot(),
-    ExtensionsModule.forRoot(),
     AppExtensionsModule,
-    AppLoginModule,
-    AppCommonModule,
-    AppLayoutModule,
-    DirectivesModule,
-    ContextMenuModule,
-    AppInfoDrawerModule,
-    AppToolbarModule,
-    AppSidenavModule,
-    AppCreateMenuModule,
-    DocumentListCustomComponentsModule,
-    AppSearchInputModule,
-    AppSearchResultsModule,
-    AppHeaderModule,
-    AppNodeVersionModule,
-    HammerModule,
-    ViewProfileModule,
     AppShellModule
+    // MaterialModule,
+    // CoreModule.forRoot(),
+    // ContentModule.forRoot(),
+    // SharedModule.forRoot(),
+    // AppStoreModule,
+    // CoreExtensionsModule.forRoot(),
+    // ExtensionsModule.forRoot(),
+    // AppLoginModule,
+    // AppCommonModule,
+    // AppLayoutModule,
+    // DirectivesModule,
+    // ContextMenuModule,
+    // AppInfoDrawerModule,
+    // AppToolbarModule,
+    // AppSidenavModule,
+    // AppCreateMenuModule,
+    // DocumentListCustomComponentsModule,
+    // AppSearchInputModule,
+    // AppSearchResultsModule,
+    // AppHeaderModule,
+    // AppNodeVersionModule,
+    // HammerModule,
+    // ViewProfileModule,
   ],
   declarations: [
     // AppComponent,
-    FilesComponent,
-    DetailsComponent,
-    LibrariesComponent,
-    FavoriteLibrariesComponent,
-    FavoritesComponent,
-    RecentFilesComponent,
-    SharedFilesComponent,
-    CreateFromTemplateDialogComponent,
-    HomeComponent
+    // FilesComponent,
+    // DetailsComponent,
+    // LibrariesComponent,
+    // FavoriteLibrariesComponent,
+    // FavoritesComponent,
+    // RecentFilesComponent,
+    // SharedFilesComponent,
+    // CreateFromTemplateDialogComponent,
+    // HomeComponent
   ],
   providers: [
     { provide: INITIAL_APP_COMPONENT_SERVICE, useClass: AppService },
