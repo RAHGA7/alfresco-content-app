@@ -56,7 +56,7 @@ import localeFi from '@angular/common/locales/fi';
 import localeDa from '@angular/common/locales/da';
 import localeSv from '@angular/common/locales/sv';
 import { AppShellComponent } from '../../../projects/aca-shared/src/lib/app-shell/feature/shell/app-shell.component';
-import { CONTENT_SERVICE_SETTINGS_TOKEN, ACA_COMPONENTS } from './extensions/core.extensions.module';
+// import { CONTENT_SERVICE_SETTINGS_TOKEN, ACA_COMPONENTS } from './extensions/core.extensions.module';
 import { ContentUrlService } from './content-plugin/services/content-url.service';
 import { AppShellModule } from '../../../projects/aca-shared/src/lib/app-shell/feature/app-shell.module';
 
@@ -133,7 +133,7 @@ registerLocaleData(localeSv);
   ],
   providers: [
     { provide: INITIAL_APP_COMPONENT_SERVICE, useClass: AppService },
-    { provide: CONTENT_SERVICE_SETTINGS_TOKEN, useValue: ACA_COMPONENTS },
+    // { provide: CONTENT_SERVICE_SETTINGS_TOKEN, useValue: ACA_COMPONENTS },
     { provide: AppConfigService, useClass: DebugAppConfigService },
     { provide: ContentVersionService, useClass: ContentUrlService },
     {
