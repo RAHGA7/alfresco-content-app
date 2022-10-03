@@ -96,8 +96,8 @@ registerLocaleData(localeSv);
       relativeLinkResolution: 'legacy'
     }),
 
-    AppExtensionsModule,
-    AppShellModule
+    AppShellModule,
+    AppExtensionsModule
     // MaterialModule,
     // CoreModule.forRoot(),
     // ContentModule.forRoot(),
