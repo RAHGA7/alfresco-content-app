@@ -26,44 +26,44 @@
 import { CoreModule, AuthGuardEcm, UserInfoComponent, NotificationHistoryComponent } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { APP_INITIALIZER, InjectionToken, Injector, ModuleWithProviders, NgModule, Type } from '@angular/core';
-import { AppLayoutComponent } from '../components/layout/app-layout/app-layout.component';
+import { AppLayoutComponent } from '../content-plugin/components/layout/app-layout/app-layout.component';
 import * as rules from '@alfresco/aca-shared/rules';
-import { ToggleInfoDrawerComponent } from '../components/toolbar/toggle-info-drawer/toggle-info-drawer.component';
-import { ToggleFavoriteComponent } from '../components/toolbar/toggle-favorite/toggle-favorite.component';
-import { ToggleFavoriteLibraryComponent } from '../components/toolbar/toggle-favorite-library/toggle-favorite-library.component';
-import { MetadataTabComponent } from '../components/info-drawer/metadata-tab/metadata-tab.component';
-import { LibraryMetadataTabComponent } from '../components/info-drawer/library-metadata-tab/library-metadata-tab.component';
-import { CommentsTabComponent } from '../components/info-drawer/comments-tab/comments-tab.component';
-import { VersionsTabComponent } from '../components/info-drawer/versions-tab/versions-tab.component';
+import { ToggleInfoDrawerComponent } from '../content-plugin/components/toolbar/toggle-info-drawer/toggle-info-drawer.component';
+import { ToggleFavoriteComponent } from '../content-plugin/components/toolbar/toggle-favorite/toggle-favorite.component';
+import { ToggleFavoriteLibraryComponent } from '../content-plugin/components/toolbar/toggle-favorite-library/toggle-favorite-library.component';
+import { MetadataTabComponent } from '../content-plugin/components/info-drawer/metadata-tab/metadata-tab.component';
+import { LibraryMetadataTabComponent } from '../content-plugin/components/info-drawer/library-metadata-tab/library-metadata-tab.component';
+import { CommentsTabComponent } from '../content-plugin/components/info-drawer/comments-tab/comments-tab.component';
+import { VersionsTabComponent } from '../content-plugin/components/info-drawer/versions-tab/versions-tab.component';
 import { ExtensionsModule, ExtensionService } from '@alfresco/adf-extensions';
-import { LocationLinkComponent } from '../components/common/location-link/location-link.component';
-import { DocumentDisplayModeComponent } from '../components/toolbar/document-display-mode/document-display-mode.component';
-import { ToggleJoinLibraryButtonComponent } from '../components/toolbar/toggle-join-library/toggle-join-library-button.component';
-import { ToggleJoinLibraryMenuComponent } from '../components/toolbar/toggle-join-library/toggle-join-library-menu.component';
-import { ToggleEditOfflineComponent } from '../components/toolbar/toggle-edit-offline/toggle-edit-offline.component';
-import { CustomNameColumnComponent } from '../components/dl-custom-components/name-column/name-column.component';
+import { LocationLinkComponent } from '../content-plugin/components/common/location-link/location-link.component';
+import { DocumentDisplayModeComponent } from '../content-plugin/components/toolbar/document-display-mode/document-display-mode.component';
+import { ToggleJoinLibraryButtonComponent } from '../content-plugin/components/toolbar/toggle-join-library/toggle-join-library-button.component';
+import { ToggleJoinLibraryMenuComponent } from '../content-plugin/components/toolbar/toggle-join-library/toggle-join-library-menu.component';
+import { ToggleEditOfflineComponent } from '../content-plugin/components/toolbar/toggle-edit-offline/toggle-edit-offline.component';
+import { CustomNameColumnComponent } from '../content-plugin/components/dl-custom-components/name-column/name-column.component';
 import {
   LibraryNameColumnComponent,
   LibraryStatusColumnComponent,
   TrashcanNameColumnComponent,
   LibraryRoleColumnComponent
 } from '@alfresco/adf-content-services';
-import { ToggleSharedComponent } from '../components/common/toggle-shared/toggle-shared.component';
-import { ViewNodeComponent } from '../components/toolbar/view-node/view-node.component';
-import { LanguagePickerComponent } from '../components/common/language-picker/language-picker.component';
-import { LogoutComponent } from '../components/common/logout/logout.component';
+import { ToggleSharedComponent } from '../content-plugin/components/common/toggle-shared/toggle-shared.component';
+import { ViewNodeComponent } from '../content-plugin/components/toolbar/view-node/view-node.component';
+import { LanguagePickerComponent } from '../content-plugin/components/common/language-picker/language-picker.component';
+import { LogoutComponent } from '../content-plugin/components/common/logout/logout.component';
 import { AppExtensionService, ExtensionsDataLoaderGuard } from '@alfresco/aca-shared';
-import { PreviewComponent } from '../components/preview/preview.component';
-import { ContentServiceExtensionService } from '../services/content-service-extension.service';
-import { DynamicAppHeaderComponent } from '../components/layout/app-layout/app-header/app-header.component';
-import { SidenavComponent } from '../components/sidenav/sidenav.component';
-// import { AppHeaderComponent } from '../components/header/header.component';
+import { PreviewComponent } from '../content-plugin/components/preview/preview.component';
+import { ContentServiceExtensionService } from '../content-plugin/services/content-service-extension.service';
+// import { DynamicAppHeaderComponent } from '../content-plugin/components/layout/app-layout/app-header/app-header.component';
+import { SidenavComponent } from '../content-plugin/components/sidenav/sidenav.component';
+import { AppHeaderComponent } from '../content-plugin/components/header/header.component';
 
 export const CONTENT_SERVICE_SETTINGS_TOKEN = new InjectionToken<{ [key in string]: Type<any> }>('COMPONENTS_TOKEN');
 
 export const ACA_COMPONENTS = {
   'app.layout.main': AppLayoutComponent,
-  'app.layout.header': DynamicAppHeaderComponent,
+  'app.layout.header': AppHeaderComponent,
   // 'app.layout.sidenav': DynamicAppHeaderComponent,
   'app.layout.sidenav': SidenavComponent,
   'app.components.tabs.metadata': MetadataTabComponent,
@@ -115,7 +115,7 @@ export function setupExtensions(
 export class CoreExtensionsModule {
   static forRoot(): ModuleWithProviders<CoreExtensionsModule> {
     debugger;
-    // console.log(this.extensions);
+
     return {
       ngModule: CoreExtensionsModule,
       providers: [
@@ -136,37 +136,6 @@ export class CoreExtensionsModule {
   }
 
   constructor(public extensions: ExtensionService) {
-    debugger;
-    // this.extensions.setComponents({
-    //   'app.layout.main': AppLayoutComponent,
-    //   'app.layout.header': AppHeaderComponent,
-    //   // 'app.layout.header': DynamicAppHeaderComponent,
-    //   'app.components.tabs.metadata': MetadataTabComponent,
-    //   'app.components.tabs.library.metadata': LibraryMetadataTabComponent,
-    //   'app.components.tabs.comments': CommentsTabComponent,
-    //   'app.components.tabs.versions': VersionsTabComponent,
-    //   'app.components.preview': PreviewComponent,
-    //   'app.toolbar.toggleInfoDrawer': ToggleInfoDrawerComponent,
-    //   'app.toolbar.toggleFavorite': ToggleFavoriteComponent,
-    //   'app.toolbar.toggleFavoriteLibrary': ToggleFavoriteLibraryComponent,
-    //   'app.toolbar.toggleJoinLibrary': ToggleJoinLibraryButtonComponent,
-    //   'app.toolbar.cardView': DocumentDisplayModeComponent,
-    //   'app.menu.toggleJoinLibrary': ToggleJoinLibraryMenuComponent,
-    //   'app.shared-link.toggleSharedLink': ToggleSharedComponent,
-    //   'app.columns.name': CustomNameColumnComponent,
-    //   'app.columns.libraryName': LibraryNameColumnComponent,
-    //   'app.columns.libraryRole': LibraryRoleColumnComponent,
-    //   'app.columns.libraryStatus': LibraryStatusColumnComponent,
-    //   'app.columns.trashcanName': TrashcanNameColumnComponent,
-    //   'app.columns.location': LocationLinkComponent,
-    //   'app.toolbar.toggleEditOffline': ToggleEditOfflineComponent,
-    //   'app.toolbar.viewNode': ViewNodeComponent,
-    //   'app.languagePicker': LanguagePickerComponent,
-    //   'app.logout': LogoutComponent,
-    //   'app.user': UserInfoComponent,
-    //   'app.notification-center': NotificationHistoryComponent
-    // });
-
     extensions.setAuthGuards({
       'app.auth': AuthGuardEcm,
       'app.extensions.dataLoaderGuard': ExtensionsDataLoaderGuard
@@ -239,40 +208,4 @@ export class CoreExtensionsModule {
       'app.isContentServiceEnabled': rules.isContentServiceEnabled
     });
   }
-
-  // private setInitialComponents(components?: { [componentId: string]: Type<any> }): void {
-  //   if (components) {
-  //     this.extensions.setComponents(components);
-  //     return;
-  //   }
-
-  //   this.extensions.setComponents({
-  //     'app.layout.main': AppLayoutComponent,
-  //     // 'app.layout.header': DynamicAppHeaderComponent,
-  //     'app.components.tabs.metadata': MetadataTabComponent,
-  //     'app.components.tabs.library.metadata': LibraryMetadataTabComponent,
-  //     'app.components.tabs.comments': CommentsTabComponent,
-  //     'app.components.tabs.versions': VersionsTabComponent,
-  //     'app.components.preview': PreviewComponent,
-  //     'app.toolbar.toggleInfoDrawer': ToggleInfoDrawerComponent,
-  //     'app.toolbar.toggleFavorite': ToggleFavoriteComponent,
-  //     'app.toolbar.toggleFavoriteLibrary': ToggleFavoriteLibraryComponent,
-  //     'app.toolbar.toggleJoinLibrary': ToggleJoinLibraryButtonComponent,
-  //     'app.toolbar.cardView': DocumentDisplayModeComponent,
-  //     'app.menu.toggleJoinLibrary': ToggleJoinLibraryMenuComponent,
-  //     'app.shared-link.toggleSharedLink': ToggleSharedComponent,
-  //     'app.columns.name': CustomNameColumnComponent,
-  //     'app.columns.libraryName': LibraryNameColumnComponent,
-  //     'app.columns.libraryRole': LibraryRoleColumnComponent,
-  //     'app.columns.libraryStatus': LibraryStatusColumnComponent,
-  //     'app.columns.trashcanName': TrashcanNameColumnComponent,
-  //     'app.columns.location': LocationLinkComponent,
-  //     'app.toolbar.toggleEditOffline': ToggleEditOfflineComponent,
-  //     'app.toolbar.viewNode': ViewNodeComponent,
-  //     'app.languagePicker': LanguagePickerComponent,
-  //     'app.logout': LogoutComponent,
-  //     'app.user': UserInfoComponent,
-  //     'app.notification-center': NotificationHistoryComponent
-  //   });
-  // }
 }

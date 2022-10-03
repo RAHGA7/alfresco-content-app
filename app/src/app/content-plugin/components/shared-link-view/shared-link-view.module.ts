@@ -32,7 +32,7 @@ import { DirectivesModule } from '../../directives/directives.module';
 import { AppCommonModule } from '../common/common.module';
 import { AppToolbarModule } from '../toolbar/toolbar.module';
 import { AppInfoDrawerModule } from '../info-drawer/info.drawer.module';
-import { CoreExtensionsModule } from '../../extensions/core.extensions.module';
+import { CoreExtensionsModule } from '../../../extensions/core.extensions.module';
 
 const routes: Routes = [
   {

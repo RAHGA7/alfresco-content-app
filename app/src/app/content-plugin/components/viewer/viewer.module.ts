@@ -30,7 +30,7 @@ import { CoreModule } from '@alfresco/adf-core';
 import { ContentDirectiveModule } from '@alfresco/adf-content-services';
 import { DirectivesModule } from '../../directives/directives.module';
 import { AppInfoDrawerModule } from '../info-drawer/info.drawer.module';
-import { CoreExtensionsModule } from '../../extensions/core.extensions.module';
+import { CoreExtensionsModule } from '../../../extensions/core.extensions.module';
 import { AppToolbarModule } from '../toolbar/toolbar.module';
 import { AppViewerComponent } from './viewer.component';
 

@@ -28,7 +28,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ContentDirectiveModule } from '@alfresco/adf-content-services';
-import { CoreExtensionsModule } from '../../extensions/core.extensions.module';
+import { CoreExtensionsModule } from '../../../extensions/core.extensions.module';
 import { DirectivesModule } from '../../directives/directives.module';
 import { AppInfoDrawerModule } from '../info-drawer/info.drawer.module';
 import { PreviewComponent } from './preview.component';
