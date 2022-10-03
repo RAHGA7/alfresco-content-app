@@ -49,7 +49,7 @@ import {
 import { ExtensionsDataLoaderGuard, SharedModule } from '@alfresco/aca-shared';
 import * as rules from '@alfresco/aca-shared/rules';
 
-import { APP_ROUTES } from '../app.routes';
+// import { APP_ROUTES } from '../app.routes';
 
 import { FilesComponent } from './components/files/files.component';
 import { LibrariesComponent } from './components/libraries/libraries.component';
@@ -121,6 +121,7 @@ import { ToggleInfoDrawerComponent } from './components/toolbar/toggle-info-draw
 import { ToggleJoinLibraryButtonComponent } from './components/toolbar/toggle-join-library/toggle-join-library-button.component';
 import { ToggleJoinLibraryMenuComponent } from './components/toolbar/toggle-join-library/toggle-join-library-menu.component';
 import { ViewNodeComponent } from './components/toolbar/view-node/view-node.component';
+import { CONTENT_ROUTES } from './content.routes';
 // import { AppShellModule } from '.../.../.../projects/aca-shared/src/lib/app-shell/feature/app-shell.module';
 // import { AppShellComponent } from '.../.../.../projects/aca-shared/src/lib/app-shell/feature/shell/app-shell.component';
 
@@ -147,11 +148,7 @@ registerLocaleData(localeSv);
     environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forRoot(APP_ROUTES, {
-      useHash: true,
-      enableTracing: false, // enable for debug only
-      relativeLinkResolution: 'legacy'
-    }),
+    RouterModule.forChild(CONTENT_ROUTES),
     MaterialModule,
     AppStoreModule,
 

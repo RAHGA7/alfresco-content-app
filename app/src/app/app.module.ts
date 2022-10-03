@@ -33,7 +33,7 @@ import { ContentModule, ContentVersionService } from '@alfresco/adf-content-serv
 import { AppService, INITIAL_APP_COMPONENT_SERVICE, SharedModule } from '@alfresco/aca-shared';
 
 // import { AppComponent } from './app.component';
-import { APP_ROUTES } from './app.routes';
+// import { APP_ROUTES } from './app.routes';
 
 import { AppExtensionsModule } from './extensions.module';
 import { environment } from '../environments/environment';
@@ -90,11 +90,12 @@ registerLocaleData(localeSv);
     environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
     // FormsModule,
     // ReactiveFormsModule,
-    RouterModule.forRoot(APP_ROUTES, {
+    RouterModule.forRoot([], {
       useHash: true,
       enableTracing: false, // enable for debug only
       relativeLinkResolution: 'legacy'
     }),
+
     AppExtensionsModule,
     AppShellModule
     // MaterialModule,
