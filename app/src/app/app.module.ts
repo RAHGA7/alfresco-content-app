@@ -55,10 +55,11 @@ import localePl from '@angular/common/locales/pl';
 import localeFi from '@angular/common/locales/fi';
 import localeDa from '@angular/common/locales/da';
 import localeSv from '@angular/common/locales/sv';
-import { AppShellComponent } from '../../../projects/aca-shared/src/lib/app-shell/feature/shell/app-shell.component';
+import { AppShellComponent } from './app-shell/components/shell/app-shell.component';
 // import { CONTENT_SERVICE_SETTINGS_TOKEN, ACA_COMPONENTS } from './extensions/core.extensions.module';
 import { ContentUrlService } from './content-plugin/services/content-url.service';
-import { AppShellModule } from '../../../projects/aca-shared/src/lib/app-shell/feature/app-shell.module';
+import { AppShellModule } from './app-shell/app-shell.module';
+// import { TranslateModule } from '@ngx-translate/core';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -84,6 +85,7 @@ registerLocaleData(localeSv);
     CoreModule.forRoot(),
     ContentModule.forRoot(),
     SharedModule.forRoot(),
+    // TranslateModule.forRoot(),
 
     environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
     // FormsModule,

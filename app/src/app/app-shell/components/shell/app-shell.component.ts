@@ -29,14 +29,14 @@ import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs/operators';
 
 // Cannot depend on apps
-import { CloseModalDialogsAction, AppStore, SetCurrentUrlAction } from '../../../../../store/src/public-api';
-import { INITIAL_APP_COMPONENT_SERVICE, ShellAppService } from '../../../services/app.service';
-import { RouterExtensionService } from '../../../services/router.extension.service';
+import { CloseModalDialogsAction, AppStore, SetCurrentUrlAction } from '../../../../../../projects/aca-shared/store/src/public-api';
+import { INITIAL_APP_COMPONENT_SERVICE, ShellAppService } from '../../../../../../projects/aca-shared/src/lib/services/app.service';
+import { RouterExtensionService } from '../../../../../../projects/aca-shared/src/lib/services/router.extension.service';
 
 @Component({
   selector: 'app-shell',
-  templateUrl: './app-shell.component.html'
-  // styleUrls: ['./app-shell.component.scss']
+  templateUrl: './app-shell.component.html',
+  styleUrls: ['./app-shell.component.scss']
 })
 export class AppShellComponent implements OnInit {
   pageHeading = '';
