@@ -45,4 +45,5 @@ export interface SettingsParameterRef {
 
 export interface ExtensionRoute extends Route {
   parentRoute?: string;
+  copyChildren?: boolean;
 }

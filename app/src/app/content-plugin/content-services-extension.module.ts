@@ -25,7 +25,7 @@
 
 import { BrowserModule, HammerModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
+// import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -46,7 +46,7 @@ import {
   LibraryStatusColumnComponent,
   TrashcanNameColumnComponent
 } from '@alfresco/adf-content-services';
-import { ExtensionsDataLoaderGuard, SharedModule } from '@alfresco/aca-shared';
+import { ExtensionsDataLoaderGuard, RouterExtensionService, SharedModule } from '@alfresco/aca-shared';
 import * as rules from '@alfresco/aca-shared/rules';
 
 // import { APP_ROUTES } from '../app.routes';
@@ -148,7 +148,7 @@ registerLocaleData(localeSv);
     environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild(CONTENT_ROUTES),
+    // RouterModule.forChild(CONTENT_ROUTES),
     MaterialModule,
     AppStoreModule,
 
@@ -205,7 +205,7 @@ registerLocaleData(localeSv);
   ]
 })
 export class ContentServiceExtensionModule {
-  constructor(public extensions: ExtensionService) {
+  constructor(public extensions: ExtensionService, public routeExtensionService: RouterExtensionService) {
     extensions.setAuthGuards({
       'app.auth': AuthGuardEcm,
       'app.extensions.dataLoaderGuard': ExtensionsDataLoaderGuard
@@ -308,5 +308,8 @@ export class ContentServiceExtensionModule {
       'app.canShowLogout': rules.canShowLogout,
       'app.isContentServiceEnabled': rules.isContentServiceEnabled
     });
+
+    debugger;
+    this.routeExtensionService.mapExtensionRoutes(CONTENT_ROUTES);
   }
 }

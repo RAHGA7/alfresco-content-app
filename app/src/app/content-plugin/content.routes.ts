@@ -23,14 +23,13 @@
  * along with Alfresco. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Routes } from '@angular/router';
 import { AppLayoutComponent } from './components/layout/app-layout/app-layout.component';
 import { FilesComponent } from './components/files/files.component';
 import { LibrariesComponent } from './components/libraries/libraries.component';
 import { FavoriteLibrariesComponent } from './components/favorite-libraries/favorite-libraries.component';
 import { SearchResultsComponent } from './components/search/search-results/search-results.component';
 import { SearchLibrariesResultsComponent } from './components/search/search-libraries-results/search-libraries-results.component';
-import { AppSharedRuleGuard, GenericErrorComponent, ExtensionsDataLoaderGuard } from '@alfresco/aca-shared';
+import { AppSharedRuleGuard, GenericErrorComponent, ExtensionsDataLoaderGuard, ExtensionRoute } from '@alfresco/aca-shared';
 import { AuthGuard } from '@alfresco/adf-core';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { RecentFilesComponent } from './components/recent-files/recent-files.component';
@@ -40,7 +39,7 @@ import { HomeComponent } from './components/home/home.component';
 import { ViewProfileComponent } from './components/view-profile/view-profile.component';
 import { ViewProfileRuleGuard } from './components/view-profile/view-profile.guard';
 
-export const CONTENT_ROUTES: Routes = [
+export const CONTENT_ROUTES: ExtensionRoute[] = [
   // {
   //   path: 'blank',
   //   component: BlankPageComponent
@@ -74,8 +73,8 @@ export const CONTENT_ROUTES: Routes = [
   },
 
   {
-    path: '',
-    component: AppLayoutComponent,
+    parentRoute: '',
+    copyChildren: true,
     canActivate: [AuthGuard, ExtensionsDataLoaderGuard],
     children: [
       {

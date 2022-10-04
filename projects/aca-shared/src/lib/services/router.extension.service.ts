@@ -39,14 +39,22 @@ export class RouterExtensionService {
 
   constructor(private router: Router, protected extensions: ExtensionService) {}
 
-  mapExtensionRoutes() {
+  mapExtensionRoutes(extensionRoutes?: ExtensionRoute[]) {
     const routesWithoutParent = [];
-    this.getApplicationRoutes().forEach((extensionRoute: ExtensionRoute) => {
+    (extensionRoutes ?? this.getApplicationRoutes()).forEach((extensionRoute: ExtensionRoute) => {
       if (this.extensionRouteHasChild(extensionRoute)) {
         const parentRoute = this.findRoute(extensionRoute.parentRoute);
         if (parentRoute) {
           this.convertExtensionRouteToRoute(extensionRoute);
-          parentRoute.children.unshift(extensionRoute);
+          if (!parentRoute.children) {
+            parentRoute.children = [];
+          }
+
+          if (extensionRoute.copyChildren) {
+            parentRoute.children.unshift(...extensionRoute.children);
+          } else {
+            parentRoute.children.unshift(extensionRoute);
+          }
         }
       } else {
         routesWithoutParent.push(extensionRoute);
@@ -54,6 +62,9 @@ export class RouterExtensionService {
     });
 
     this.router.config.unshift(...routesWithoutParent);
+
+    // TODO Remove
+    window['config'] = this.router.config;
   }
 
   public getApplicationRoutes(): Array<ExtensionRoute> {
