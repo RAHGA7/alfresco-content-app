@@ -10,8 +10,14 @@
   >
     <adf-sidenav-layout-header>
       <ng-template let-isMenuMinimized="isMenuMinimized">
-        <adf-dynamic-component id="app.layout.header">
-        </adf-dynamic-component>
+        <div
+          role="heading"
+          aria-level="1"
+          *ngIf="!hideSidenav"
+        >
+          <adf-dynamic-component id="app.layout.header" [data]="{ layout }">
+          </adf-dynamic-component>
+        </div>
 
         <!-- <app-header
           role="heading"
@@ -26,8 +32,17 @@
 
     <adf-sidenav-layout-navigation>
       <ng-template let-isMenuMinimized="isMenuMinimized">
-        <adf-dynamic-component id="app.layout.sidenav">
-        </adf-dynamic-component>
+        <div
+          (swipeleft)="hideMenu($event)"
+          [attr.data-automation-id]="isMenuMinimized() ? 'collapsed' : 'expanded'"
+        >
+          <adf-dynamic-component
+            id="app.layout.sidenav"
+            [data]="{ mode: layout.isMenuMinimized ? 'collapsed' : 'expanded'}"
+          >
+          </adf-dynamic-component>
+        </div>
+
         <!-- <app-sidenav
           [mode]="isMenuMinimized() ? 'collapsed' : 'expanded'"
           [attr.data-automation-id]="isMenuMinimized() ? 'collapsed' : 'expanded'"

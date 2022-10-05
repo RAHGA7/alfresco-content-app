@@ -40,7 +40,11 @@ import { AppExtensionService } from '@alfresco/aca-shared';
 })
 export class SidenavComponent implements OnInit, OnDestroy {
   @Input()
-  mode: 'collapsed' | 'expanded' = 'expanded';
+  data: { mode: 'collapsed' | 'expanded' } = { mode: 'expanded' };
+
+  get mode(): string {
+    return this.data.mode;
+  }
 
   groups: Array<NavBarGroupRef> = [];
   private onDestroy$ = new Subject<boolean>();

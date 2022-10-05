@@ -201,7 +201,7 @@ registerLocaleData(localeSv);
       deps: [Injector],
       useFactory: (injector: Injector) => {
         const shellRoute = injector.get(SHELL_MAIN_ROUTE);
-        shellRoute.children = CONTENT_LAYOUT_ROUTES.children;
+        shellRoute.children = [...CONTENT_LAYOUT_ROUTES.children];
         return shellRoute;
       },
       multi: true

@@ -30,7 +30,7 @@ import { ContentActionRef } from '@alfresco/adf-extensions';
 import { AppStore, getHeaderColor, getAppName, getLogoPath, getHeaderImagePath, getHeaderTextColor } from '@alfresco/aca-shared/store';
 import { AppExtensionService } from '@alfresco/aca-shared';
 import { takeUntil } from 'rxjs/operators';
-import { AppConfigService } from '@alfresco/adf-core';
+import { AppConfigService, SidenavLayoutComponent } from '@alfresco/adf-core';
 import { isContentServiceEnabled } from '@alfresco/aca-shared/rules';
 
 @Component({
@@ -45,7 +45,8 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
   @Output()
   toggleClicked = new EventEmitter();
 
-  @Input() expandedSidenav = true;
+  // @Input() expandedSidenav = true;
+  @Input() data: { layout?: SidenavLayoutComponent; isMenuMinimized?: boolean } = {};
 
   appName$: Observable<string>;
   headerColor$: Observable<any>;
@@ -55,14 +56,14 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
 
   actions: Array<ContentActionRef> = [];
 
-  constructor(store: Store<AppStore>, private appExtensions: AppExtensionService, private appConfigService: AppConfigService) {
+  constructor(public store: Store<AppStore>, private appExtensions: AppExtensionService, private appConfigService: AppConfigService) {
     this.headerColor$ = store.select(getHeaderColor);
     this.headerTextColor$ = store.select(getHeaderTextColor);
     this.appName$ = store.select(getAppName);
     this.logo$ = store.select(getLogoPath);
     this.landingPage = this.appConfigService.get('landingPage', '/personal-files');
 
-    store.select(getHeaderImagePath).subscribe((path) => {
+    this.store.select(getHeaderImagePath).subscribe((path) => {
       document.body.style.setProperty('--header-background-image', `url('${path}')`);
     });
   }
@@ -78,6 +79,10 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
     this.headerTextColor$.subscribe((color) => {
       document.documentElement.style.setProperty('--adf-header-text-color', color);
     });
+  }
+
+  onToggleSidenav(_event: boolean): void {
+    this.data.layout.toggleMenu();
   }
 
   isContentServiceEnabled(): boolean {
