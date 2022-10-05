@@ -40,17 +40,6 @@ import { ViewProfileComponent } from './components/view-profile/view-profile.com
 import { ViewProfileRuleGuard } from './components/view-profile/view-profile.guard';
 
 export const CONTENT_ROUTES: ExtensionRoute[] = [
-  // {
-  //   path: 'blank',
-  //   component: BlankPageComponent
-  // },
-  // {
-  //   path: 'login',
-  //   component: LoginComponent,
-  //   data: {
-  //     title: 'APP.SIGN_IN'
-  //   }
-  // },
   {
     path: 'preview/s/:id',
     loadChildren: () => import('./components/shared-link-view/shared-link-view.module').then((m) => m.AppSharedLinkViewModule)
@@ -70,504 +59,506 @@ export const CONTENT_ROUTES: ExtensionRoute[] = [
         ]
       }
     ]
-  },
-
-  {
-    parentRoute: '',
-    copyChildren: true,
-    canActivate: [AuthGuard, ExtensionsDataLoaderGuard],
-    children: [
-      {
-        path: 'profile',
-        canActivate: [ViewProfileRuleGuard],
-        component: ViewProfileComponent
-      },
-      {
-        path: '',
-        component: HomeComponent
-      },
-      {
-        path: 'personal-files',
-        children: [
-          {
-            path: '',
-            component: FilesComponent,
-            data: {
-              sortingPreferenceKey: 'personal-files',
-              title: 'APP.BROWSE.PERSONAL.TITLE',
-              defaultNodeId: '-my-'
-            }
-          },
-          {
-            path: 'details/:nodeId',
-            children: [
-              {
-                path: '',
-                component: DetailsComponent,
-                data: {
-                  navigateSource: 'personal-files'
-                }
-              },
-              {
-                path: ':activeTab',
-                component: DetailsComponent,
-                data: {
-                  navigateSource: 'personal-files'
-                }
-              }
-            ]
-          },
-          // deprecated, backwards compatibility with ACA 1.8
-          {
-            path: 'preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
-            data: {
-              navigateSource: 'personal-files'
-            }
-          },
-          {
-            path: 'view/:nodeId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'personal-files'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          },
-          {
-            path: 'view/:nodeId/:versionId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'personal-files'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          }
-        ]
-      },
-      {
-        path: 'personal-files/:folderId',
-        children: [
-          {
-            path: '',
-            component: FilesComponent,
-            data: {
-              title: 'APP.BROWSE.PERSONAL.TITLE',
-              sortingPreferenceKey: 'personal-files'
-            }
-          },
-          {
-            path: 'view/:nodeId/:versionId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'personal-files'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          },
-          // deprecated, backwards compatibility with ACA 1.8
-          {
-            path: 'preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
-            data: {
-              navigateSource: 'personal-files'
-            }
-          },
-          // deprecated, backwards compatibility with ACA 1.8
-          {
-            path: ':folderId/preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
-            data: {
-              navigateSource: 'personal-files'
-            }
-          },
-          {
-            path: 'view/:nodeId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'personal-files'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          }
-        ]
-      },
-      {
-        path: 'libraries',
-        children: [
-          {
-            path: '',
-            component: LibrariesComponent,
-            data: {
-              title: 'APP.BROWSE.LIBRARIES.MENU.MY_LIBRARIES.TITLE',
-              sortingPreferenceKey: 'libraries'
-            }
-          }
-        ]
-      },
-      {
-        path: 'libraries/:folderId',
-        children: [
-          {
-            path: '',
-            component: FilesComponent,
-            data: {
-              title: 'APP.BROWSE.LIBRARIES.MENU.MY_LIBRARIES.TITLE',
-              sortingPreferenceKey: 'libraries-files'
-            }
-          },
-          // deprecated, backwards compatibility with ACA 1.8
-          {
-            path: 'preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
-            data: {
-              navigateSource: 'libraries'
-            }
-          },
-          {
-            path: 'view/:nodeId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'libraries'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          },
-          {
-            path: 'view/:nodeId/:versionId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'libraries'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          }
-        ]
-      },
-      {
-        path: 'favorite',
-        children: [
-          {
-            path: '',
-            pathMatch: 'full',
-            redirectTo: 'libraries'
-          },
-          {
-            path: 'libraries',
-            component: FavoriteLibrariesComponent,
-            data: {
-              title: 'APP.BROWSE.LIBRARIES.MENU.FAVORITE_LIBRARIES.TITLE',
-              sortingPreferenceKey: 'favorite-libraries'
-            }
-          }
-        ]
-      },
-      {
-        path: 'favorite/libraries/:folderId',
-        children: [
-          {
-            path: '',
-            component: FilesComponent,
-            data: {
-              title: 'APP.BROWSE.LIBRARIES.MENU.FAVORITE_LIBRARIES.TITLE',
-              sortingPreferenceKey: 'libraries-files'
-            }
-          },
-          {
-            path: 'view/:nodeId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'libraries'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          },
-          {
-            path: 'view/:nodeId/:versionId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'libraries'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          }
-        ]
-      },
-      {
-        path: 'favorites',
-        data: {
-          sortingPreferenceKey: 'favorites'
-        },
-        children: [
-          {
-            path: '',
-            component: FavoritesComponent,
-            data: {
-              title: 'APP.BROWSE.FAVORITES.TITLE',
-              sortingPreferenceKey: 'favorites'
-            }
-            // loadChildren:
-            //   './components/favorites/favorites.module#AppFavoritesModule'
-          },
-          // deprecated, backwards compatibility with ACA 1.8
-          {
-            path: 'preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
-            data: {
-              navigateSource: 'favorites'
-            }
-          },
-          {
-            path: 'view/:nodeId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'favorites'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          },
-          {
-            path: 'view/:nodeId/:versionId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'favorites'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          }
-        ]
-      },
-      {
-        path: 'recent-files',
-        data: {
-          sortingPreferenceKey: 'recent-files'
-        },
-        children: [
-          {
-            path: '',
-            component: RecentFilesComponent,
-            data: {
-              title: 'APP.BROWSE.RECENT.TITLE'
-            }
-            // loadChildren:
-            //   './components/recent-files/recent-files.module#AppRecentFilesModule'
-          },
-          // deprecated, backwards compatibility with ACA 1.8
-          {
-            path: 'preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
-            data: {
-              navigateSource: 'recent-files'
-            }
-          },
-          {
-            path: 'view/:nodeId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'recent-files'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          },
-          {
-            path: 'view/:nodeId/:versionId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'recent-files'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          }
-        ]
-      },
-      {
-        path: 'shared',
-        children: [
-          {
-            path: '',
-            data: {
-              title: 'APP.BROWSE.SHARED.TITLE',
-              sortingPreferenceKey: 'shared-files'
-            },
-            component: SharedFilesComponent
-            // loadChildren:
-            //   './components/shared-files/shared-files.module#AppSharedFilesModule'
-          },
-          // deprecated, backwards compatibility with ACA 1.8
-          {
-            path: 'preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
-            data: {
-              navigateSource: 'shared'
-            }
-          },
-          {
-            path: 'view/:nodeId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'shared'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          },
-          {
-            path: 'view/:nodeId/:versionId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'shared'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          }
-        ],
-        canActivateChild: [AppSharedRuleGuard],
-        canActivate: [AppSharedRuleGuard]
-      },
-      {
-        path: 'trashcan',
-        loadChildren: () => import('./components/trashcan/trashcan.module').then((m) => m.AppTrashcanModule)
-      },
-      {
-        path: 'search',
-        children: [
-          {
-            path: '',
-            component: SearchResultsComponent,
-            data: {
-              title: 'APP.BROWSE.SEARCH.TITLE'
-            }
-          },
-          // deprecated, backwards compatibility with ACA 1.8
-          {
-            path: 'preview/:nodeId',
-            loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
-            data: {
-              navigateSource: 'search'
-            }
-          },
-          {
-            path: 'view/:nodeId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'search'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          },
-          {
-            path: 'view/:nodeId/:versionId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'search'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          }
-        ]
-      },
-      {
-        path: 'search-libraries',
-        children: [
-          {
-            path: '',
-            component: SearchLibrariesResultsComponent,
-            data: {
-              title: 'APP.BROWSE.SEARCH.TITLE'
-            }
-          },
-          {
-            path: 'view/:nodeId',
-            outlet: 'viewer',
-            children: [
-              {
-                path: '',
-                data: {
-                  navigateSource: 'search'
-                },
-                loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
-              }
-            ]
-          }
-        ]
-      },
-      {
-        path: 'nodes/:nodeId',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('@alfresco/aca-folder-rules').then((m) => m.AcaFolderRulesModule)
-          }
-        ]
-      },
-      {
-        path: '**',
-        component: GenericErrorComponent
-      }
-    ],
-    canActivateChild: [AuthGuard]
   }
 ];
+
+export const CONTENT_LAYOUT_ROUTES: ExtensionRoute = {
+  component: AppLayoutComponent,
+  parentRoute: '',
+  copyChildren: true,
+  path: '',
+  canActivate: [AuthGuard, ExtensionsDataLoaderGuard],
+  children: [
+    {
+      path: 'profile',
+      canActivate: [ViewProfileRuleGuard],
+      component: ViewProfileComponent
+    },
+    {
+      path: '',
+      component: HomeComponent
+    },
+    {
+      path: 'personal-files',
+      children: [
+        {
+          path: '',
+          component: FilesComponent,
+          data: {
+            sortingPreferenceKey: 'personal-files',
+            title: 'APP.BROWSE.PERSONAL.TITLE',
+            defaultNodeId: '-my-'
+          }
+        },
+        {
+          path: 'details/:nodeId',
+          children: [
+            {
+              path: '',
+              component: DetailsComponent,
+              data: {
+                navigateSource: 'personal-files'
+              }
+            },
+            {
+              path: ':activeTab',
+              component: DetailsComponent,
+              data: {
+                navigateSource: 'personal-files'
+              }
+            }
+          ]
+        },
+        // deprecated, backwards compatibility with ACA 1.8
+        {
+          path: 'preview/:nodeId',
+          loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+          data: {
+            navigateSource: 'personal-files'
+          }
+        },
+        {
+          path: 'view/:nodeId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'personal-files'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        },
+        {
+          path: 'view/:nodeId/:versionId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'personal-files'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: 'personal-files/:folderId',
+      children: [
+        {
+          path: '',
+          component: FilesComponent,
+          data: {
+            title: 'APP.BROWSE.PERSONAL.TITLE',
+            sortingPreferenceKey: 'personal-files'
+          }
+        },
+        {
+          path: 'view/:nodeId/:versionId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'personal-files'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        },
+        // deprecated, backwards compatibility with ACA 1.8
+        {
+          path: 'preview/:nodeId',
+          loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+          data: {
+            navigateSource: 'personal-files'
+          }
+        },
+        // deprecated, backwards compatibility with ACA 1.8
+        {
+          path: ':folderId/preview/:nodeId',
+          loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+          data: {
+            navigateSource: 'personal-files'
+          }
+        },
+        {
+          path: 'view/:nodeId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'personal-files'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: 'libraries',
+      children: [
+        {
+          path: '',
+          component: LibrariesComponent,
+          data: {
+            title: 'APP.BROWSE.LIBRARIES.MENU.MY_LIBRARIES.TITLE',
+            sortingPreferenceKey: 'libraries'
+          }
+        }
+      ]
+    },
+    {
+      path: 'libraries/:folderId',
+      children: [
+        {
+          path: '',
+          component: FilesComponent,
+          data: {
+            title: 'APP.BROWSE.LIBRARIES.MENU.MY_LIBRARIES.TITLE',
+            sortingPreferenceKey: 'libraries-files'
+          }
+        },
+        // deprecated, backwards compatibility with ACA 1.8
+        {
+          path: 'preview/:nodeId',
+          loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+          data: {
+            navigateSource: 'libraries'
+          }
+        },
+        {
+          path: 'view/:nodeId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'libraries'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        },
+        {
+          path: 'view/:nodeId/:versionId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'libraries'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: 'favorite',
+      children: [
+        {
+          path: '',
+          pathMatch: 'full',
+          redirectTo: 'libraries'
+        },
+        {
+          path: 'libraries',
+          component: FavoriteLibrariesComponent,
+          data: {
+            title: 'APP.BROWSE.LIBRARIES.MENU.FAVORITE_LIBRARIES.TITLE',
+            sortingPreferenceKey: 'favorite-libraries'
+          }
+        }
+      ]
+    },
+    {
+      path: 'favorite/libraries/:folderId',
+      children: [
+        {
+          path: '',
+          component: FilesComponent,
+          data: {
+            title: 'APP.BROWSE.LIBRARIES.MENU.FAVORITE_LIBRARIES.TITLE',
+            sortingPreferenceKey: 'libraries-files'
+          }
+        },
+        {
+          path: 'view/:nodeId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'libraries'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        },
+        {
+          path: 'view/:nodeId/:versionId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'libraries'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: 'favorites',
+      data: {
+        sortingPreferenceKey: 'favorites'
+      },
+      children: [
+        {
+          path: '',
+          component: FavoritesComponent,
+          data: {
+            title: 'APP.BROWSE.FAVORITES.TITLE',
+            sortingPreferenceKey: 'favorites'
+          }
+          // loadChildren:
+          //   './components/favorites/favorites.module#AppFavoritesModule'
+        },
+        // deprecated, backwards compatibility with ACA 1.8
+        {
+          path: 'preview/:nodeId',
+          loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+          data: {
+            navigateSource: 'favorites'
+          }
+        },
+        {
+          path: 'view/:nodeId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'favorites'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        },
+        {
+          path: 'view/:nodeId/:versionId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'favorites'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: 'recent-files',
+      data: {
+        sortingPreferenceKey: 'recent-files'
+      },
+      children: [
+        {
+          path: '',
+          component: RecentFilesComponent,
+          data: {
+            title: 'APP.BROWSE.RECENT.TITLE'
+          }
+          // loadChildren:
+          //   './components/recent-files/recent-files.module#AppRecentFilesModule'
+        },
+        // deprecated, backwards compatibility with ACA 1.8
+        {
+          path: 'preview/:nodeId',
+          loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+          data: {
+            navigateSource: 'recent-files'
+          }
+        },
+        {
+          path: 'view/:nodeId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'recent-files'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        },
+        {
+          path: 'view/:nodeId/:versionId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'recent-files'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: 'shared',
+      children: [
+        {
+          path: '',
+          data: {
+            title: 'APP.BROWSE.SHARED.TITLE',
+            sortingPreferenceKey: 'shared-files'
+          },
+          component: SharedFilesComponent
+          // loadChildren:
+          //   './components/shared-files/shared-files.module#AppSharedFilesModule'
+        },
+        // deprecated, backwards compatibility with ACA 1.8
+        {
+          path: 'preview/:nodeId',
+          loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+          data: {
+            navigateSource: 'shared'
+          }
+        },
+        {
+          path: 'view/:nodeId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'shared'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        },
+        {
+          path: 'view/:nodeId/:versionId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'shared'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        }
+      ],
+      canActivateChild: [AppSharedRuleGuard],
+      canActivate: [AppSharedRuleGuard]
+    },
+    {
+      path: 'trashcan',
+      loadChildren: () => import('./components/trashcan/trashcan.module').then((m) => m.AppTrashcanModule)
+    },
+    {
+      path: 'search',
+      children: [
+        {
+          path: '',
+          component: SearchResultsComponent,
+          data: {
+            title: 'APP.BROWSE.SEARCH.TITLE'
+          }
+        },
+        // deprecated, backwards compatibility with ACA 1.8
+        {
+          path: 'preview/:nodeId',
+          loadChildren: () => import('./components/preview/preview.module').then((m) => m.PreviewModule),
+          data: {
+            navigateSource: 'search'
+          }
+        },
+        {
+          path: 'view/:nodeId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'search'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        },
+        {
+          path: 'view/:nodeId/:versionId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'search'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: 'search-libraries',
+      children: [
+        {
+          path: '',
+          component: SearchLibrariesResultsComponent,
+          data: {
+            title: 'APP.BROWSE.SEARCH.TITLE'
+          }
+        },
+        {
+          path: 'view/:nodeId',
+          outlet: 'viewer',
+          children: [
+            {
+              path: '',
+              data: {
+                navigateSource: 'search'
+              },
+              loadChildren: () => import('./components/viewer/viewer.module').then((m) => m.AppViewerModule)
+            }
+          ]
+        }
+      ]
+    },
+    {
+      path: 'nodes/:nodeId',
+      children: [
+        {
+          path: '',
+          loadChildren: () => import('@alfresco/aca-folder-rules').then((m) => m.AcaFolderRulesModule)
+        }
+      ]
+    },
+    {
+      path: '**',
+      component: GenericErrorComponent
+    }
+  ],
+  canActivateChild: [AuthGuard]
+}

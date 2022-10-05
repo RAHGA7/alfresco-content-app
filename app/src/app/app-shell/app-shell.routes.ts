@@ -25,12 +25,13 @@
 
 import { BlankPageComponent } from '@alfresco/adf-core';
 import { InjectionToken } from '@angular/core';
-import { CanActivate, CanActivateChild, Routes } from '@angular/router';
+import { CanActivate, CanActivateChild, Route, Routes } from '@angular/router';
 import { ExtensionsDataLoaderGuard } from '../../../../projects/aca-shared/src/public-api';
 import { AppLayoutComponent } from '../content-plugin/components/layout/app-layout/app-layout.component';
 import { LoginComponent } from '../content-plugin/components/login/login.component';
 
 export const SHELL_AUTH_TOKEN = new InjectionToken<CanActivate & CanActivateChild>('SHELL_AUTH_TOKEN');
+export const SHELL_MAIN_ROUTE = new InjectionToken<Route>('SHELL_MAIN_ROUTE');
 
 export const SHELL_ROUTES: Routes = [
   {
@@ -43,11 +44,12 @@ export const SHELL_ROUTES: Routes = [
     data: {
       title: 'APP.SIGN_IN'
     }
-  },
-  {
-    path: '',
-    component: AppLayoutComponent,
-    // canActivate: [AuthGuard, ExtensionsDataLoaderGuard]
-    canActivate: [SHELL_AUTH_TOKEN, ExtensionsDataLoaderGuard]
   }
 ];
+
+export const SHELL_LAYOUT_ROUTE: Route = {
+  path: '',
+  component: AppLayoutComponent,
+  canActivate: [SHELL_AUTH_TOKEN, ExtensionsDataLoaderGuard],
+  children: []
+};

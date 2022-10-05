@@ -43,7 +43,7 @@ import { Store } from '@ngrx/store';
 import { INITIAL_APP_STATE } from '../../../../../app/src/app/content-plugin/store/initial-state';
 
 export interface ShellAppService {
-  isLoggedIn(): boolean; // Observable
+  isLoggedIn(): boolean;
   loadAppSettings(): void;
 
   customCss$?: Observable<string>;

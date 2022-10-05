@@ -24,7 +24,7 @@
  */
 
 import { BrowserModule, HammerModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { Injector, NgModule } from '@angular/core';
 // import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -121,9 +121,9 @@ import { ToggleInfoDrawerComponent } from './components/toolbar/toggle-info-draw
 import { ToggleJoinLibraryButtonComponent } from './components/toolbar/toggle-join-library/toggle-join-library-button.component';
 import { ToggleJoinLibraryMenuComponent } from './components/toolbar/toggle-join-library/toggle-join-library-menu.component';
 import { ViewNodeComponent } from './components/toolbar/view-node/view-node.component';
-import { CONTENT_ROUTES } from './content.routes';
-// import { AppShellModule } from '.../.../.../projects/aca-shared/src/lib/app-shell/feature/app-shell.module';
-// import { AppShellComponent } from '.../.../.../projects/aca-shared/src/lib/app-shell/feature/shell/app-shell.component';
+import { CONTENT_LAYOUT_ROUTES, CONTENT_ROUTES } from './content.routes';
+import { RouterModule, ROUTES } from '@angular/router';
+import { SHELL_MAIN_ROUTE } from '../app-shell/app-shell.routes';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -148,18 +148,15 @@ registerLocaleData(localeSv);
     environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    // RouterModule.forChild(CONTENT_ROUTES),
+    RouterModule.forChild(CONTENT_ROUTES),
     MaterialModule,
     AppStoreModule,
-
-    // for child?
     CoreModule.forRoot(),
     ContentModule.forRoot(),
     SharedModule.forRoot(),
     CoreExtensionsModule.forRoot(),
     ExtensionsModule.forRoot(),
 
-    // AppExtensionsModule,
     AppLoginModule,
     AppCommonModule,
     AppLayoutModule,
@@ -176,7 +173,6 @@ registerLocaleData(localeSv);
     AppNodeVersionModule,
     HammerModule,
     ViewProfileModule
-    // AppShellModule
   ],
   declarations: [
     FilesComponent,
@@ -190,8 +186,6 @@ registerLocaleData(localeSv);
     HomeComponent
   ],
   providers: [
-    // { provide: INITIAL_APP_COMPONENT_SERVICE, useClass: AppService },
-    // { provide: CONTENT_SERVICE_SETTINGS_TOKEN, useValue: ACA_COMPONENTS },
     { provide: AppConfigService, useClass: DebugAppConfigService },
     { provide: ContentVersionService, useClass: ContentUrlService },
     {
@@ -201,6 +195,16 @@ registerLocaleData(localeSv);
         name: 'app',
         source: 'assets'
       }
+    },
+    {
+      provide: ROUTES,
+      deps: [Injector],
+      useFactory: (injector: Injector) => {
+        const shellRoute = injector.get(SHELL_MAIN_ROUTE);
+        shellRoute.children = CONTENT_LAYOUT_ROUTES.children;
+        return shellRoute;
+      },
+      multi: true
     }
   ]
 })
@@ -214,7 +218,6 @@ export class ContentServiceExtensionModule {
     extensions.setComponents({
       'app.layout.main': AppLayoutComponent,
       'app.layout.header': AppHeaderComponent,
-      // 'app.layout.sidenav': DynamicAppHeaderComponent,
       'app.layout.sidenav': SidenavComponent,
       'app.components.tabs.metadata': MetadataTabComponent,
       'app.components.tabs.library.metadata': LibraryMetadataTabComponent,
@@ -310,6 +313,6 @@ export class ContentServiceExtensionModule {
     });
 
     debugger;
-    this.routeExtensionService.mapExtensionRoutes(CONTENT_ROUTES);
+    // this.routeExtensionService.mapExtensionRoutes(CONTENT_ROUTES);
   }
 }
