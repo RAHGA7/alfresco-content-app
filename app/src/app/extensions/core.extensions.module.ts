@@ -25,58 +25,12 @@
 
 import { CoreModule } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
-import { APP_INITIALIZER, Injector, ModuleWithProviders, NgModule } from '@angular/core';
-import { ExtensionsModule, ExtensionService } from '@alfresco/adf-extensions';
+import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
+import { ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppExtensionService } from '@alfresco/aca-shared';
-import { ContentServiceExtensionService } from '../content-plugin/services/content-service-extension.service';
-
-// export const CONTENT_SERVICE_SETTINGS_TOKEN = new InjectionToken<{ [key in string]: Type<any> }>('COMPONENTS_TOKEN');
-
-// export const ACA_COMPONENTS = {
-//   'app.layout.main': AppLayoutComponent,
-//   'app.layout.header': AppHeaderComponent,
-//   // 'app.layout.sidenav': DynamicAppHeaderComponent,
-//   'app.layout.sidenav': SidenavComponent,
-//   'app.components.tabs.metadata': MetadataTabComponent,
-//   'app.components.tabs.library.metadata': LibraryMetadataTabComponent,
-//   'app.components.tabs.comments': CommentsTabComponent,
-//   'app.components.tabs.versions': VersionsTabComponent,
-//   'app.components.preview': PreviewComponent,
-//   'app.toolbar.toggleInfoDrawer': ToggleInfoDrawerComponent,
-//   'app.toolbar.toggleFavorite': ToggleFavoriteComponent,
-//   'app.toolbar.toggleFavoriteLibrary': ToggleFavoriteLibraryComponent,
-//   'app.toolbar.toggleJoinLibrary': ToggleJoinLibraryButtonComponent,
-//   'app.toolbar.cardView': DocumentDisplayModeComponent,
-//   'app.menu.toggleJoinLibrary': ToggleJoinLibraryMenuComponent,
-//   'app.shared-link.toggleSharedLink': ToggleSharedComponent,
-//   'app.columns.name': CustomNameColumnComponent,
-//   'app.columns.libraryName': LibraryNameColumnComponent,
-//   'app.columns.libraryRole': LibraryRoleColumnComponent,
-//   'app.columns.libraryStatus': LibraryStatusColumnComponent,
-//   'app.columns.trashcanName': TrashcanNameColumnComponent,
-//   'app.columns.location': LocationLinkComponent,
-//   'app.toolbar.toggleEditOffline': ToggleEditOfflineComponent,
-//   'app.toolbar.viewNode': ViewNodeComponent,
-//   'app.languagePicker': LanguagePickerComponent,
-//   'app.logout': LogoutComponent,
-//   'app.user': UserInfoComponent,
-//   'app.notification-center': NotificationHistoryComponent
-// };
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
-export function setupExtensions(
-  service: AppExtensionService,
-  _contentServiceExtensionService: ContentServiceExtensionService,
-  _extensionService: ExtensionService,
-  _injector: Injector
-  // @Inject(COMPONENTS_TOKEN) _acaComponents: { [key in string]: Type<any> },
-): () => void {
-  debugger;
-  // const components = injector.get(CONTENT_SERVICE_SETTINGS_TOKEN);
-  // console.log(components);
-
-  // extensionService.setComponents(components);
-
+export function setupExtensions(service: AppExtensionService): () => void {
   return () => service.load();
 }
 
@@ -85,15 +39,13 @@ export function setupExtensions(
 })
 export class CoreExtensionsModule {
   static forRoot(): ModuleWithProviders<CoreExtensionsModule> {
-    debugger;
-
     return {
       ngModule: CoreExtensionsModule,
       providers: [
         {
           provide: APP_INITIALIZER,
           useFactory: setupExtensions,
-          deps: [AppExtensionService, ContentServiceExtensionService, ExtensionService, Injector],
+          deps: [AppExtensionService],
           multi: true
         }
       ]

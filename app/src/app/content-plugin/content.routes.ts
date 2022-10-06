@@ -29,7 +29,7 @@ import { LibrariesComponent } from './components/libraries/libraries.component';
 import { FavoriteLibrariesComponent } from './components/favorite-libraries/favorite-libraries.component';
 import { SearchResultsComponent } from './components/search/search-results/search-results.component';
 import { SearchLibrariesResultsComponent } from './components/search/search-libraries-results/search-libraries-results.component';
-import { AppSharedRuleGuard, GenericErrorComponent, ExtensionsDataLoaderGuard, ExtensionRoute } from '@alfresco/aca-shared';
+import { AppSharedRuleGuard, GenericErrorComponent, ExtensionRoute } from '@alfresco/aca-shared';
 import { AuthGuard } from '@alfresco/adf-core';
 import { FavoritesComponent } from './components/favorites/favorites.component';
 import { RecentFilesComponent } from './components/recent-files/recent-files.component';
@@ -63,11 +63,8 @@ export const CONTENT_ROUTES: ExtensionRoute[] = [
 ];
 
 export const CONTENT_LAYOUT_ROUTES: ExtensionRoute = {
-  component: AppLayoutComponent,
   parentRoute: '',
-  copyChildren: true,
   path: '',
-  canActivate: [AuthGuard, ExtensionsDataLoaderGuard],
   children: [
     {
       path: 'profile',

@@ -46,15 +46,7 @@ export class RouterExtensionService {
         const parentRoute = this.findRoute(extensionRoute.parentRoute);
         if (parentRoute) {
           this.convertExtensionRouteToRoute(extensionRoute);
-          if (!parentRoute.children) {
-            parentRoute.children = [];
-          }
-
-          if (extensionRoute.copyChildren) {
-            parentRoute.children.unshift(...extensionRoute.children);
-          } else {
-            parentRoute.children.unshift(extensionRoute);
-          }
+          parentRoute.children.unshift(extensionRoute);
         }
       } else {
         routesWithoutParent.push(extensionRoute);
@@ -62,9 +54,6 @@ export class RouterExtensionService {
     });
 
     this.router.config.unshift(...routesWithoutParent);
-
-    // TODO Remove
-    window['config'] = this.router.config;
   }
 
   public getApplicationRoutes(): Array<ExtensionRoute> {

@@ -49,8 +49,6 @@ import {
 import { ExtensionsDataLoaderGuard, RouterExtensionService, SharedModule } from '@alfresco/aca-shared';
 import * as rules from '@alfresco/aca-shared/rules';
 
-// import { APP_ROUTES } from '../app.routes';
-
 import { FilesComponent } from './components/files/files.component';
 import { LibrariesComponent } from './components/libraries/libraries.component';
 import { FavoriteLibrariesComponent } from './components/favorite-libraries/favorite-libraries.component';
@@ -58,7 +56,6 @@ import { ViewProfileModule } from './components/view-profile/view-profile.module
 
 import { AppStoreModule } from './store/app-store.module';
 import { MaterialModule } from '../material.module';
-// import { AppExtensionsModule } from '../extensions.module';
 import { CoreExtensionsModule } from '../extensions/core.extensions.module';
 import { AppInfoDrawerModule } from './components/info-drawer/info.drawer.module';
 import { DirectivesModule } from './directives/directives.module';
@@ -110,7 +107,6 @@ import { CommentsTabComponent } from './components/info-drawer/comments-tab/comm
 import { LibraryMetadataTabComponent } from './components/info-drawer/library-metadata-tab/library-metadata-tab.component';
 import { MetadataTabComponent } from './components/info-drawer/metadata-tab/metadata-tab.component';
 import { VersionsTabComponent } from './components/info-drawer/versions-tab/versions-tab.component';
-// import { AppLayoutComponent } from './components/layout/app-layout/app-layout.component';
 import { PreviewComponent } from './components/preview/preview.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { DocumentDisplayModeComponent } from './components/toolbar/document-display-mode/document-display-mode.component';
@@ -311,8 +307,5 @@ export class ContentServiceExtensionModule {
       'app.canShowLogout': rules.canShowLogout,
       'app.isContentServiceEnabled': rules.isContentServiceEnabled
     });
-
-    debugger;
-    // this.routeExtensionService.mapExtensionRoutes(CONTENT_ROUTES);
   }
 }
