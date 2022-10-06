@@ -24,26 +24,31 @@
  */
 
 import { BlankPageComponent } from '@alfresco/adf-core';
-import { InjectionToken } from '@angular/core';
-import { CanActivate, CanActivateChild, Route, Routes } from '@angular/router';
-import { ExtensionsDataLoaderGuard } from '../../../../projects/aca-shared/src/public-api';
-import { LoginComponent } from '../content-plugin/components/login/login.component';
+import { Injectable, InjectionToken } from '@angular/core';
+import { CanActivate, CanActivateChild, Route, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { ExtensionRoute, ExtensionsDataLoaderGuard } from '../../../../projects/aca-shared/src/public-api';
 import { ShellLayoutComponent } from './components/layout/shell-layout.component';
 
 export const SHELL_AUTH_TOKEN = new InjectionToken<CanActivate & CanActivateChild>('SHELL_AUTH_TOKEN');
 export const SHELL_MAIN_ROUTE = new InjectionToken<Route>('SHELL_MAIN_ROUTE');
 
-export const SHELL_ROUTES: Routes = [
+@Injectable({
+  providedIn: 'root'
+})
+export class ShellLoginGuard implements CanActivate, CanActivateChild {
+  canActivate(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): boolean {
+    return true;
+  }
+
+  canActivateChild(_childRoute: ActivatedRouteSnapshot, _state: RouterStateSnapshot): boolean {
+    return true;
+  }
+}
+
+export const SHELL_ROUTES: ExtensionRoute[] = [
   {
     path: 'blank',
     component: BlankPageComponent
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-    data: {
-      title: 'APP.SIGN_IN'
-    }
   }
 ];
 

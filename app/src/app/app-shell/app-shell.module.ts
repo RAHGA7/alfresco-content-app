@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppShellComponent } from './components/shell/app-shell.component';
 import { RouterModule } from '@angular/router';
-import { SHELL_AUTH_TOKEN, SHELL_LAYOUT_ROUTE, SHELL_MAIN_ROUTE, SHELL_ROUTES } from './app-shell.routes';
+import { ShellLoginGuard, SHELL_AUTH_TOKEN, SHELL_LAYOUT_ROUTE, SHELL_MAIN_ROUTE, SHELL_ROUTES } from './app-shell.routes';
 import { AuthGuard, SidenavLayoutModule } from '@alfresco/adf-core';
-import { ExtensionsModule } from '@alfresco/adf-extensions';
+import { ExtensionService, ExtensionsModule, provideExtensionConfig } from '@alfresco/adf-extensions';
 import { ShellLayoutComponent } from './components/layout/shell-layout.component';
 import { ContentModule } from '@alfresco/adf-content-services';
 
@@ -25,6 +25,7 @@ import { ContentModule } from '@alfresco/adf-content-services';
   exports: [AppShellComponent, ShellLayoutComponent],
   declarations: [AppShellComponent, ShellLayoutComponent],
   providers: [
+    provideExtensionConfig(['shell.plugin.json']),
     {
       provide: SHELL_AUTH_TOKEN,
       useClass: AuthGuard
@@ -35,4 +36,10 @@ import { ContentModule } from '@alfresco/adf-content-services';
     }
   ]
 })
-export class AppShellModule {}
+export class AppShellModule {
+  constructor(extensions: ExtensionService) {
+    extensions.setAuthGuards({
+      'app.shell.login.guard': ShellLoginGuard
+    });
+  }
+}

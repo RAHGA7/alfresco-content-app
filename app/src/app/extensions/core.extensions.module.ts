@@ -26,8 +26,9 @@
 import { CoreModule } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
-import { ExtensionsModule } from '@alfresco/adf-extensions';
+import { ExtensionService, ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppExtensionService } from '@alfresco/aca-shared';
+import { LoginComponent } from '../content-plugin/components/login/login.component';
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function setupExtensions(service: AppExtensionService): () => void {
@@ -38,6 +39,12 @@ export function setupExtensions(service: AppExtensionService): () => void {
   imports: [CommonModule, CoreModule.forChild(), ExtensionsModule]
 })
 export class CoreExtensionsModule {
+  constructor(extensions: ExtensionService) {
+    extensions.setComponents({
+      'app.shell.login': LoginComponent
+    });
+  }
+
   static forRoot(): ModuleWithProviders<CoreExtensionsModule> {
     return {
       ngModule: CoreExtensionsModule,

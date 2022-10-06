@@ -25,7 +25,6 @@
 
 import { BrowserModule, HammerModule } from '@angular/platform-browser';
 import { Injector, NgModule } from '@angular/core';
-// import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -120,6 +119,7 @@ import { ViewNodeComponent } from './components/toolbar/view-node/view-node.comp
 import { CONTENT_LAYOUT_ROUTES, CONTENT_ROUTES } from './content.routes';
 import { RouterModule, ROUTES } from '@angular/router';
 import { SHELL_MAIN_ROUTE } from '../app-shell/app-shell.routes';
+import { AppLayoutComponent } from './components/layout/app-layout/app-layout.component';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -212,7 +212,7 @@ export class ContentServiceExtensionModule {
     });
 
     extensions.setComponents({
-      // 'app.layout.main': AppLayoutComponent, // shell layout is used
+      'app.layout.main': AppLayoutComponent,
       'app.layout.header': AppHeaderComponent,
       'app.layout.sidenav': SidenavComponent,
       'app.components.tabs.metadata': MetadataTabComponent,
