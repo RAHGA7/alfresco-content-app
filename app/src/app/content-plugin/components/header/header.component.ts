@@ -42,10 +42,17 @@ import { isContentServiceEnabled } from '@alfresco/aca-shared/rules';
 })
 export class AppHeaderComponent implements OnInit, OnDestroy {
   private onDestroy$: Subject<boolean> = new Subject<boolean>();
+
   @Output()
   toggleClicked = new EventEmitter();
 
+  @Input() expandedSidenav = true;
+
   @Input() data: { layout?: SidenavLayoutComponent; isMenuMinimized?: boolean } = {};
+
+  get isSidenavExpanded(): boolean {
+    return !this.data.isMenuMinimized ?? this.expandedSidenav;
+  }
 
   appName$: Observable<string>;
   headerColor$: Observable<any>;

@@ -5,7 +5,7 @@
   [color]="headerColor$ | async"
   [title]="appName$ | async"
   (clicked)="onToggleSidenav($event)"
-  [expandedSidenav]="!data.isMenuMinimized"
+  [expandedSidenav]="isSidenavExpanded"
 >
   <div class="adf-toolbar--spacer adf-toolbar-divider"></div>
 
