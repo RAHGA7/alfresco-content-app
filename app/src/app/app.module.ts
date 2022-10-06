@@ -32,9 +32,6 @@ import { TRANSLATION_PROVIDER, AppConfigService, DebugAppConfigService, CoreModu
 import { ContentModule, ContentVersionService } from '@alfresco/adf-content-services';
 import { AppService, INITIAL_APP_COMPONENT_SERVICE, SharedModule } from '@alfresco/aca-shared';
 
-// import { AppComponent } from './app.component';
-// import { APP_ROUTES } from './app.routes';
-
 import { AppExtensionsModule } from './extensions.module';
 import { environment } from '../environments/environment';
 
@@ -56,10 +53,9 @@ import localeFi from '@angular/common/locales/fi';
 import localeDa from '@angular/common/locales/da';
 import localeSv from '@angular/common/locales/sv';
 import { AppShellComponent } from './app-shell/components/shell/app-shell.component';
-// import { CONTENT_SERVICE_SETTINGS_TOKEN, ACA_COMPONENTS } from './extensions/core.extensions.module';
 import { ContentUrlService } from './content-plugin/services/content-url.service';
 import { AppShellModule } from './app-shell/app-shell.module';
-// import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -81,15 +77,11 @@ registerLocaleData(localeSv);
 @NgModule({
   imports: [
     BrowserModule,
-
+    TranslateModule.forRoot(),
     CoreModule.forRoot(),
     ContentModule.forRoot(),
     SharedModule.forRoot(),
-    // TranslateModule.forRoot(),
-
     environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
-    // FormsModule,
-    // ReactiveFormsModule,
     RouterModule.forRoot([], {
       useHash: true,
       enableTracing: false, // enable for debug only
@@ -98,45 +90,9 @@ registerLocaleData(localeSv);
 
     AppShellModule,
     AppExtensionsModule
-    // MaterialModule,
-    // CoreModule.forRoot(),
-    // ContentModule.forRoot(),
-    // SharedModule.forRoot(),
-    // AppStoreModule,
-    // CoreExtensionsModule.forRoot(),
-    // ExtensionsModule.forRoot(),
-    // AppLoginModule,
-    // AppCommonModule,
-    // AppLayoutModule,
-    // DirectivesModule,
-    // ContextMenuModule,
-    // AppInfoDrawerModule,
-    // AppToolbarModule,
-    // AppSidenavModule,
-    // AppCreateMenuModule,
-    // DocumentListCustomComponentsModule,
-    // AppSearchInputModule,
-    // AppSearchResultsModule,
-    // AppHeaderModule,
-    // AppNodeVersionModule,
-    // HammerModule,
-    // ViewProfileModule,
-  ],
-  declarations: [
-    // AppComponent,
-    // FilesComponent,
-    // DetailsComponent,
-    // LibrariesComponent,
-    // FavoriteLibrariesComponent,
-    // FavoritesComponent,
-    // RecentFilesComponent,
-    // SharedFilesComponent,
-    // CreateFromTemplateDialogComponent,
-    // HomeComponent
   ],
   providers: [
     { provide: INITIAL_APP_COMPONENT_SERVICE, useClass: AppService },
-    // { provide: CONTENT_SERVICE_SETTINGS_TOKEN, useValue: ACA_COMPONENTS },
     { provide: AppConfigService, useClass: DebugAppConfigService },
     { provide: ContentVersionService, useClass: ContentUrlService },
     {
@@ -148,7 +104,6 @@ registerLocaleData(localeSv);
       }
     }
   ],
-  // bootstrap: [AppComponent]
   bootstrap: [AppShellComponent]
 })
 export class AppModule {}

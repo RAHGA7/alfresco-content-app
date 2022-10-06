@@ -110,7 +110,7 @@ import { CommentsTabComponent } from './components/info-drawer/comments-tab/comm
 import { LibraryMetadataTabComponent } from './components/info-drawer/library-metadata-tab/library-metadata-tab.component';
 import { MetadataTabComponent } from './components/info-drawer/metadata-tab/metadata-tab.component';
 import { VersionsTabComponent } from './components/info-drawer/versions-tab/versions-tab.component';
-import { AppLayoutComponent } from './components/layout/app-layout/app-layout.component';
+// import { AppLayoutComponent } from './components/layout/app-layout/app-layout.component';
 import { PreviewComponent } from './components/preview/preview.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 import { DocumentDisplayModeComponent } from './components/toolbar/document-display-mode/document-display-mode.component';
@@ -216,7 +216,7 @@ export class ContentServiceExtensionModule {
     });
 
     extensions.setComponents({
-      'app.layout.main': AppLayoutComponent,
+      // 'app.layout.main': AppLayoutComponent,
       'app.layout.header': AppHeaderComponent,
       'app.layout.sidenav': SidenavComponent,
       'app.components.tabs.metadata': MetadataTabComponent,

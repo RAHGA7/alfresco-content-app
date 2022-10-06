@@ -7,7 +7,7 @@ import { SHELL_AUTH_TOKEN, SHELL_LAYOUT_ROUTE, SHELL_MAIN_ROUTE, SHELL_ROUTES } 
 import { AuthGuard, SidenavLayoutModule } from '@alfresco/adf-core';
 import { AppLayoutModule } from '../content-plugin/components/layout/layout.module';
 import { ExtensionsModule } from '@alfresco/adf-extensions';
-import { ShellLayoutComponent } from './components/layout/app-layout.component';
+import { ShellLayoutComponent } from './components/layout/shell-layout.component';
 import { ContentModule } from '@alfresco/adf-content-services';
 
 @NgModule({
@@ -18,7 +18,7 @@ import { ContentModule } from '@alfresco/adf-content-services';
     AppLayoutModule,
     RouterModule.forChild(SHELL_ROUTES),
     CommonModule,
-    TranslateModule.forRoot()
+    TranslateModule.forChild()
   ],
   exports: [AppShellComponent, ShellLayoutComponent],
   declarations: [AppShellComponent, ShellLayoutComponent],

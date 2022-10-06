@@ -26,7 +26,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { AppConfigService, FileModel, UploadService, UserPreferencesService } from '@alfresco/adf-core';
-import { ShellLayoutComponent } from './app-layout.component';
+import { ShellLayoutComponent } from './shell-layout.component';
 import { AppTestingModule } from '../../../testing/app-testing.module';
 import { Store } from '@ngrx/store';
 import { AppStore, SetSelectedNodesAction, ResetSelectionAction } from '@alfresco/aca-shared/store';

@@ -27,11 +27,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, ActivationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { filter, take } from 'rxjs/operators';
-
-// Cannot depend on apps
-import { CloseModalDialogsAction, AppStore, SetCurrentUrlAction } from '../../../../../../projects/aca-shared/store/src/public-api';
-import { INITIAL_APP_COMPONENT_SERVICE, ShellAppService } from '../../../../../../projects/aca-shared/src/lib/services/app.service';
-import { RouterExtensionService } from '../../../../../../projects/aca-shared/src/lib/services/router.extension.service';
+import { INITIAL_APP_COMPONENT_SERVICE, ShellAppService, RouterExtensionService } from '@alfresco/aca-shared';
+import { AppStore, CloseModalDialogsAction, SetCurrentUrlAction } from '@alfresco/aca-shared/store';
 
 @Component({
   selector: 'app-shell',

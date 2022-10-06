@@ -45,7 +45,6 @@ export class AppHeaderComponent implements OnInit, OnDestroy {
   @Output()
   toggleClicked = new EventEmitter();
 
-  // @Input() expandedSidenav = true;
   @Input() data: { layout?: SidenavLayoutComponent; isMenuMinimized?: boolean } = {};
 
   appName$: Observable<string>;

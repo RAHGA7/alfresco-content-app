@@ -36,8 +36,8 @@ import { Directionality } from '@angular/cdk/bidi';
 
 @Component({
   selector: 'app-shell-layout',
-  templateUrl: './app-layout.component.html',
-  styleUrls: ['./app-layout.component.scss'],
+  templateUrl: './shell-layout.component.html',
+  styleUrls: ['./shell-layout.component.scss'],
   encapsulation: ViewEncapsulation.None,
   host: { class: 'app-layout' }
 })
@@ -83,7 +83,6 @@ export class ShellLayoutComponent implements OnInit, OnDestroy {
       this.expandedSidenav = false;
     }
 
-    // async in html
     this.store
       .select(getCurrentFolder)
       .pipe(takeUntil(this.onDestroy$))
@@ -123,7 +122,6 @@ export class ShellLayoutComponent implements OnInit, OnDestroy {
         this.store.dispatch(new ResetSelectionAction());
       });
 
-    // change to async in html?
     this.store
       .select(getFileUploadingDialog)
       .pipe(delay(0), takeUntil(this.onDestroy$))
@@ -144,7 +142,6 @@ export class ShellLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  // updateLayoutState
   private updateState() {
     if (this.minimizeSidenav && !this.layout.isMenuMinimized) {
       this.layout.isMenuMinimized = true;
@@ -167,7 +164,6 @@ export class ShellLayoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  // private isSidenavExpanded(): boolean {
   private getSidenavState(): boolean {
     const expand = this.appConfigService.get<boolean>('sideNav.expandedSidenav', true);
     const preserveState = this.appConfigService.get<boolean>('sideNav.preserveState', true);
