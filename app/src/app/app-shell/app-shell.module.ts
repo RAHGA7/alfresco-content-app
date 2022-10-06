@@ -16,7 +16,11 @@ import { ContentModule } from '@alfresco/adf-content-services';
     ContentModule,
     ExtensionsModule,
     AppLayoutModule,
-    RouterModule.forChild(SHELL_ROUTES),
+    RouterModule.forRoot(SHELL_ROUTES, {
+      useHash: true,
+      enableTracing: false, // enable for debug only
+      relativeLinkResolution: 'legacy'
+    }),
     CommonModule,
     TranslateModule.forChild()
   ],

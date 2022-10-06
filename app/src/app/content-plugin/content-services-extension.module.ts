@@ -212,7 +212,7 @@ export class ContentServiceExtensionModule {
     });
 
     extensions.setComponents({
-      // 'app.layout.main': AppLayoutComponent,
+      // 'app.layout.main': AppLayoutComponent, // shell layout is used
       'app.layout.header': AppHeaderComponent,
       'app.layout.sidenav': SidenavComponent,
       'app.components.tabs.metadata': MetadataTabComponent,

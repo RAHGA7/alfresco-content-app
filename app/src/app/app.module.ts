@@ -25,7 +25,6 @@
 
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { TRANSLATION_PROVIDER, AppConfigService, DebugAppConfigService, CoreModule } from '@alfresco/adf-core';
@@ -82,12 +81,6 @@ registerLocaleData(localeSv);
     ContentModule.forRoot(),
     SharedModule.forRoot(),
     environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
-    RouterModule.forRoot([], {
-      useHash: true,
-      enableTracing: false, // enable for debug only
-      relativeLinkResolution: 'legacy'
-    }),
-
     AppShellModule,
     AppExtensionsModule
   ],
