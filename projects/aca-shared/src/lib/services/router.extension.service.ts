@@ -64,7 +64,7 @@ export class RouterExtensionService {
 
       const newRoute = {
         path: route.path,
-        component: this.getComponentById(route.layout || this.defaults.layout),
+        component: this.getComponentById(route.layout ?? this.defaults.layout),
         canActivateChild: guards,
         canActivate: guards,
         parentRoute: route.parentRoute,
