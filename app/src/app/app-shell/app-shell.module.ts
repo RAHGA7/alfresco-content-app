@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppShellComponent } from './components/shell/app-shell.component';
 import { RouterModule } from '@angular/router';
-import { ShellDummyGuard, SHELL_AUTH_TOKEN, SHELL_LAYOUT_ROUTE, SHELL_MAIN_ROUTE } from './app-shell.routes';
-import { AuthGuard, BlankPageComponent, SidenavLayoutModule } from '@alfresco/adf-core';
+import { ShellDummyGuard, SHELL_LAYOUT_ROUTE, SHELL_MAIN_ROUTE } from './app-shell.routes';
+import { BlankPageComponent, SidenavLayoutModule } from '@alfresco/adf-core';
 import { ExtensionService, ExtensionsModule, provideExtensionConfig } from '@alfresco/adf-extensions';
 import { ShellLayoutComponent } from './components/layout/shell-layout.component';
 import { ContentModule } from '@alfresco/adf-content-services';
@@ -26,10 +26,6 @@ import { ContentModule } from '@alfresco/adf-content-services';
   declarations: [AppShellComponent, ShellLayoutComponent],
   providers: [
     provideExtensionConfig(['shell.plugin.json']),
-    {
-      provide: SHELL_AUTH_TOKEN,
-      useClass: AuthGuard
-    },
     {
       provide: SHELL_MAIN_ROUTE,
       useValue: SHELL_LAYOUT_ROUTE
