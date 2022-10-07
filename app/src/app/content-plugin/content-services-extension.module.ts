@@ -196,9 +196,9 @@ registerLocaleData(localeSv);
       provide: ROUTES,
       deps: [Injector],
       useFactory: (injector: Injector) => {
-        const shellRoute = injector.get(SHELL_MAIN_ROUTE);
-        shellRoute.children = [...CONTENT_LAYOUT_ROUTES.children];
-        return shellRoute;
+        const shellLayoutRoute = injector.get(SHELL_MAIN_ROUTE);
+        shellLayoutRoute.children = [...CONTENT_LAYOUT_ROUTES.children];
+        return shellLayoutRoute;
       },
       multi: true
     }
