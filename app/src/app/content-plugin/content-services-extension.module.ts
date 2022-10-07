@@ -24,7 +24,7 @@
  */
 
 import { BrowserModule, HammerModule } from '@angular/platform-browser';
-import { Injector, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
@@ -117,8 +117,8 @@ import { ToggleJoinLibraryButtonComponent } from './components/toolbar/toggle-jo
 import { ToggleJoinLibraryMenuComponent } from './components/toolbar/toggle-join-library/toggle-join-library-menu.component';
 import { ViewNodeComponent } from './components/toolbar/view-node/view-node.component';
 import { CONTENT_LAYOUT_ROUTES, CONTENT_ROUTES } from './content.routes';
-import { RouterModule, ROUTES } from '@angular/router';
-import { SHELL_MAIN_ROUTE } from '../app-shell/app-shell.routes';
+import { RouterModule } from '@angular/router';
+import { provideRoutesWithShellLayout } from '../app-shell/app-shell.routes';
 import { AppLayoutComponent } from './components/layout/app-layout/app-layout.component';
 
 registerLocaleData(localeFr);
@@ -192,16 +192,7 @@ registerLocaleData(localeSv);
         source: 'assets'
       }
     },
-    {
-      provide: ROUTES,
-      deps: [Injector],
-      useFactory: (injector: Injector) => {
-        const shellLayoutRoute = injector.get(SHELL_MAIN_ROUTE);
-        shellLayoutRoute.children = [...CONTENT_LAYOUT_ROUTES.children];
-        return shellLayoutRoute;
-      },
-      multi: true
-    }
+    provideRoutesWithShellLayout(CONTENT_LAYOUT_ROUTES.children)
   ]
 })
 export class ContentServiceExtensionModule {
