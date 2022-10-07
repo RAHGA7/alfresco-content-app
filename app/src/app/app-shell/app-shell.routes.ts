@@ -23,10 +23,9 @@
  * along with Alfresco. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { BlankPageComponent } from '@alfresco/adf-core';
 import { Injectable, InjectionToken } from '@angular/core';
 import { CanActivate, CanActivateChild, Route, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { ExtensionRoute, ExtensionsDataLoaderGuard } from '../../../../projects/aca-shared/src/public-api';
+import { ExtensionsDataLoaderGuard } from '../../../../projects/aca-shared/src/public-api';
 import { ShellLayoutComponent } from './components/layout/shell-layout.component';
 
 export const SHELL_AUTH_TOKEN = new InjectionToken<CanActivate & CanActivateChild>('SHELL_AUTH_TOKEN');
@@ -35,7 +34,11 @@ export const SHELL_MAIN_ROUTE = new InjectionToken<Route>('SHELL_MAIN_ROUTE');
 @Injectable({
   providedIn: 'root'
 })
-export class ShellLoginGuard implements CanActivate, CanActivateChild {
+export class ShellDummyGuard implements CanActivate, CanActivateChild {
+  /*
+    Required due to plugin system since without it
+    we are going to get real guard which could prevent us from accessing e.g. login page
+  */
   canActivate(_route: ActivatedRouteSnapshot, _state: RouterStateSnapshot): boolean {
     return true;
   }
@@ -44,13 +47,6 @@ export class ShellLoginGuard implements CanActivate, CanActivateChild {
     return true;
   }
 }
-
-export const SHELL_ROUTES: ExtensionRoute[] = [
-  {
-    path: 'blank',
-    component: BlankPageComponent
-  }
-];
 
 export const SHELL_LAYOUT_ROUTE: Route = {
   path: '',

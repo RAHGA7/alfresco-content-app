@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { AppShellComponent } from './components/shell/app-shell.component';
 import { RouterModule } from '@angular/router';
-import { ShellLoginGuard, SHELL_AUTH_TOKEN, SHELL_LAYOUT_ROUTE, SHELL_MAIN_ROUTE, SHELL_ROUTES } from './app-shell.routes';
-import { AuthGuard, SidenavLayoutModule } from '@alfresco/adf-core';
+import { ShellDummyGuard, SHELL_AUTH_TOKEN, SHELL_LAYOUT_ROUTE, SHELL_MAIN_ROUTE } from './app-shell.routes';
+import { AuthGuard, BlankPageComponent, SidenavLayoutModule } from '@alfresco/adf-core';
 import { ExtensionService, ExtensionsModule, provideExtensionConfig } from '@alfresco/adf-extensions';
 import { ShellLayoutComponent } from './components/layout/shell-layout.component';
 import { ContentModule } from '@alfresco/adf-content-services';
@@ -14,7 +14,7 @@ import { ContentModule } from '@alfresco/adf-content-services';
     SidenavLayoutModule,
     ContentModule,
     ExtensionsModule,
-    RouterModule.forRoot(SHELL_ROUTES, {
+    RouterModule.forRoot([], {
       useHash: true,
       enableTracing: false, // enable for debug only
       relativeLinkResolution: 'legacy'
@@ -39,7 +39,11 @@ import { ContentModule } from '@alfresco/adf-content-services';
 export class AppShellModule {
   constructor(extensions: ExtensionService) {
     extensions.setAuthGuards({
-      'app.shell.login.guard': ShellLoginGuard
+      'app.shell.dummy.guard': ShellDummyGuard
+    });
+
+    extensions.setComponents({
+      'app.shell.blank': BlankPageComponent
     });
   }
 }
