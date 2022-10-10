@@ -23,15 +23,12 @@
  * along with Alfresco. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { AuthGuard, CoreModule } from '@alfresco/adf-core';
+import { CoreModule } from '@alfresco/adf-core';
 import { CommonModule } from '@angular/common';
 import { APP_INITIALIZER, ModuleWithProviders, NgModule } from '@angular/core';
 import { ExtensionService, ExtensionsModule } from '@alfresco/adf-extensions';
 import { AppExtensionService } from '@alfresco/aca-shared';
 import { LoginComponent } from '../content-plugin/components/login/login.component';
-import { SHELL_AUTH_TOKEN } from '../app-shell/app-shell.routes';
-import { AppShellModule } from '../app-shell/app-shell.module';
-import { CONTENT_LAYOUT_ROUTES } from '../content-plugin/content.routes';
 
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function setupExtensions(service: AppExtensionService): () => void {
@@ -39,13 +36,7 @@ export function setupExtensions(service: AppExtensionService): () => void {
 }
 
 @NgModule({
-  imports: [CommonModule, CoreModule.forChild(), ExtensionsModule, AppShellModule.withChildren(CONTENT_LAYOUT_ROUTES.children)],
-  providers: [
-    {
-      provide: SHELL_AUTH_TOKEN,
-      useClass: AuthGuard
-    }
-  ]
+  imports: [CommonModule, CoreModule.forChild(), ExtensionsModule],
 })
 export class CoreExtensionsModule {
   constructor(extensions: ExtensionService) {

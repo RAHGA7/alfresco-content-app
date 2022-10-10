@@ -27,7 +27,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations';
 
-import { TRANSLATION_PROVIDER, AppConfigService, DebugAppConfigService, CoreModule } from '@alfresco/adf-core';
+import { TRANSLATION_PROVIDER, AppConfigService, DebugAppConfigService, CoreModule, AuthGuard } from '@alfresco/adf-core';
 import { ContentModule, ContentVersionService } from '@alfresco/adf-content-services';
 import { AppService, SharedModule } from '@alfresco/aca-shared';
 
@@ -57,6 +57,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.components';
 import { APP_ROUTES } from './app.routes';
+import { SHELL_AUTH_TOKEN } from './app-shell/app-shell.routes';
+import { CONTENT_LAYOUT_ROUTES } from './content-plugin/content.routes';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -88,13 +90,17 @@ registerLocaleData(localeSv);
     ContentModule.forRoot(),
     SharedModule.forRoot(),
     environment.e2e ? NoopAnimationsModule : BrowserAnimationsModule,
-    AppShellModule,
+    AppShellModule.withChildren(CONTENT_LAYOUT_ROUTES.children),
     AppExtensionsModule
   ],
   providers: [
     { provide: AppService, useClass: AppService },
     { provide: AppConfigService, useClass: DebugAppConfigService },
     { provide: ContentVersionService, useClass: ContentUrlService },
+    {
+      provide: SHELL_AUTH_TOKEN,
+      useClass: AuthGuard
+    },
     {
       provide: TRANSLATION_PROVIDER,
       multi: true,
