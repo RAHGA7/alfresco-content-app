@@ -40,7 +40,7 @@ import { CONTENT_LAYOUT_ROUTES } from './content-plugin/content.routes';
     ...(environment.devTools ? [AcaSettingsModule] : []),
     AcaAboutModule.forRoot(environment.production),
     AcaFolderRulesModule,
-    AppShellModule.withChildren(CONTENT_LAYOUT_ROUTES.children, './content-plugin/content-services-extension.module.ts')
+    AppShellModule.withChildren(CONTENT_LAYOUT_ROUTES.children)
   ]
 })
 export class AppExtensionsModule {}
