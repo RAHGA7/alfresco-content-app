@@ -29,18 +29,18 @@ import { AcaAboutModule } from '@alfresco/aca-about';
 import { AcaSettingsModule } from '@alfresco/aca-settings';
 import { AcaFolderRulesModule } from '@alfresco/aca-folder-rules';
 import { environment } from '../environments/environment';
-import { ContentServiceExtensionModule } from './content-plugin/content-services-extension.module';
+// import { ContentServiceExtensionModule } from './content-plugin/content-services-extension.module';
 import { AppShellModule } from './app-shell/app-shell.module';
 import { CONTENT_LAYOUT_ROUTES } from './content-plugin/content.routes';
 
 @NgModule({
   imports: [
-    ContentServiceExtensionModule,
+    // ContentServiceExtensionModule,
     AosExtensionModule,
     ...(environment.devTools ? [AcaSettingsModule] : []),
     AcaAboutModule.forRoot(environment.production),
     AcaFolderRulesModule,
-    AppShellModule.withChildren(CONTENT_LAYOUT_ROUTES.children)
+    AppShellModule.withChildren(CONTENT_LAYOUT_ROUTES.children, './content-plugin/content-services-extension.module.ts')
   ]
 })
 export class AppExtensionsModule {}

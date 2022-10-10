@@ -29,7 +29,7 @@ import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform
 
 import { TRANSLATION_PROVIDER, AppConfigService, DebugAppConfigService, CoreModule } from '@alfresco/adf-core';
 import { ContentModule, ContentVersionService } from '@alfresco/adf-content-services';
-import { AppService, INITIAL_APP_COMPONENT_SERVICE, SharedModule } from '@alfresco/aca-shared';
+import { AppService, SharedModule } from '@alfresco/aca-shared';
 
 import { AppExtensionsModule } from './extensions.module';
 import { environment } from '../environments/environment';
@@ -51,11 +51,12 @@ import localePl from '@angular/common/locales/pl';
 import localeFi from '@angular/common/locales/fi';
 import localeDa from '@angular/common/locales/da';
 import localeSv from '@angular/common/locales/sv';
-import { AppShellComponent } from './app-shell/components/shell/app-shell.component';
 import { ContentUrlService } from './content-plugin/services/content-url.service';
 import { AppShellModule } from './app-shell/app-shell.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
+import { AppComponent } from './app.components';
+import { APP_ROUTES } from './app.routes';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -77,7 +78,7 @@ registerLocaleData(localeSv);
 @NgModule({
   imports: [
     BrowserModule,
-    RouterModule.forRoot([], {
+    RouterModule.forRoot(APP_ROUTES, {
       useHash: true,
       enableTracing: false, // enable for debug only
       relativeLinkResolution: 'legacy'
@@ -91,7 +92,7 @@ registerLocaleData(localeSv);
     AppExtensionsModule
   ],
   providers: [
-    { provide: INITIAL_APP_COMPONENT_SERVICE, useClass: AppService },
+    { provide: AppService, useClass: AppService },
     { provide: AppConfigService, useClass: DebugAppConfigService },
     { provide: ContentVersionService, useClass: ContentUrlService },
     {
@@ -103,6 +104,7 @@ registerLocaleData(localeSv);
       }
     }
   ],
-  bootstrap: [AppShellComponent]
+  declarations: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

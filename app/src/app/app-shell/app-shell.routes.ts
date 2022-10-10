@@ -51,6 +51,6 @@ export class ShellDummyGuard implements CanActivate, CanActivateChild {
 export const SHELL_LAYOUT_ROUTE: Route = {
   path: '',
   component: ShellLayoutComponent,
-  canActivate: [SHELL_AUTH_TOKEN, ExtensionsDataLoaderGuard],
-  children: []
+  canActivate: [SHELL_AUTH_TOKEN, ExtensionsDataLoaderGuard]
+  // children: []
 };

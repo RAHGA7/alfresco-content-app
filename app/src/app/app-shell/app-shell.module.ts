@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
-import { AppShellComponent } from './components/shell/app-shell.component';
 import { Routes, provideRoutes, RouterModule } from '@angular/router';
 import { ShellDummyGuard, SHELL_LAYOUT_ROUTE, SHELL_MAIN_ROUTE } from './app-shell.routes';
 import { BlankPageComponent, SidenavLayoutModule } from '@alfresco/adf-core';
@@ -11,8 +10,8 @@ import { ContentModule } from '@alfresco/adf-content-services';
 
 @NgModule({
   imports: [SidenavLayoutModule, ContentModule, ExtensionsModule, RouterModule.forChild([]), CommonModule, TranslateModule.forChild()],
-  exports: [AppShellComponent, ShellLayoutComponent],
-  declarations: [AppShellComponent, ShellLayoutComponent],
+  exports: [ShellLayoutComponent],
+  declarations: [ShellLayoutComponent],
   providers: [
     provideExtensionConfig(['shell.plugin.json']),
     {
@@ -22,9 +21,17 @@ import { ContentModule } from '@alfresco/adf-content-services';
   ]
 })
 export class AppShellModule {
-  static withChildren(childRouters: Routes): ModuleWithProviders<AppShellModule> {
+  // static withChildren(_childRouters: Routes, path: string): ModuleWithProviders<AppShellModule> {
+  static withChildren(childRouters: Routes, path: string): ModuleWithProviders<AppShellModule> {
+    debugger;
     const shellLayoutRoute = SHELL_LAYOUT_ROUTE;
     shellLayoutRoute.children = [...childRouters];
+    // eslint-disable-next-line arrow-body-style
+    // shellLayoutRoute.loadChildren = () =>
+    //   import(path).then((m) => {
+    //     debugger;
+    //     return m['ContentServiceExtensionModule'];
+    //   });
 
     return {
       ngModule: AppShellModule,
