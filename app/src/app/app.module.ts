@@ -55,6 +55,7 @@ import { AppShellComponent } from './app-shell/components/shell/app-shell.compon
 import { ContentUrlService } from './content-plugin/services/content-url.service';
 import { AppShellModule } from './app-shell/app-shell.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { RouterModule } from '@angular/router';
 
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
@@ -76,6 +77,11 @@ registerLocaleData(localeSv);
 @NgModule({
   imports: [
     BrowserModule,
+    RouterModule.forRoot([], {
+      useHash: true,
+      enableTracing: false, // enable for debug only
+      relativeLinkResolution: 'legacy'
+    }),
     TranslateModule.forRoot(),
     CoreModule.forRoot(),
     ContentModule.forRoot(),

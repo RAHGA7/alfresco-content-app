@@ -116,9 +116,8 @@ import { ToggleInfoDrawerComponent } from './components/toolbar/toggle-info-draw
 import { ToggleJoinLibraryButtonComponent } from './components/toolbar/toggle-join-library/toggle-join-library-button.component';
 import { ToggleJoinLibraryMenuComponent } from './components/toolbar/toggle-join-library/toggle-join-library-menu.component';
 import { ViewNodeComponent } from './components/toolbar/view-node/view-node.component';
-import { CONTENT_LAYOUT_ROUTES, CONTENT_ROUTES } from './content.routes';
+import { CONTENT_ROUTES } from './content.routes';
 import { RouterModule } from '@angular/router';
-import { provideRoutesWithShellLayout } from '../app-shell/app-shell.routes';
 import { AppLayoutComponent } from './components/layout/app-layout/app-layout.component';
 
 registerLocaleData(localeFr);
@@ -191,8 +190,7 @@ registerLocaleData(localeSv);
         name: 'app',
         source: 'assets'
       }
-    },
-    provideRoutesWithShellLayout(CONTENT_LAYOUT_ROUTES.children)
+    }
   ]
 })
 export class ContentServiceExtensionModule {

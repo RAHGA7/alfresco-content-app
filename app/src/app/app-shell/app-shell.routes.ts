@@ -23,8 +23,8 @@
  * along with Alfresco. If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { Injectable, InjectionToken, Injector, Provider } from '@angular/core';
-import { CanActivate, CanActivateChild, Route, ActivatedRouteSnapshot, RouterStateSnapshot, ROUTES } from '@angular/router';
+import { Injectable, InjectionToken } from '@angular/core';
+import { CanActivate, CanActivateChild, Route, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { ExtensionsDataLoaderGuard } from '../../../../projects/aca-shared/src/public-api';
 import { ShellLayoutComponent } from './components/layout/shell-layout.component';
 
@@ -53,18 +53,4 @@ export const SHELL_LAYOUT_ROUTE: Route = {
   component: ShellLayoutComponent,
   canActivate: [SHELL_AUTH_TOKEN, ExtensionsDataLoaderGuard],
   children: []
-};
-
-// eslint-disable-next-line arrow-body-style
-export const provideRoutesWithShellLayout = (shellLayoutChildren: Route[]): Provider => {
-  return {
-    provide: ROUTES,
-    deps: [Injector],
-    useFactory: (injector: Injector) => {
-      const shellLayoutRoute = injector.get(SHELL_MAIN_ROUTE);
-      shellLayoutRoute.children = [...shellLayoutChildren];
-      return shellLayoutRoute;
-    },
-    multi: true
-  };
 };
