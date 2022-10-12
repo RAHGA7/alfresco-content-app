@@ -64,7 +64,11 @@ import { SharedFilesComponent } from './components/shared-files/shared-files.com
 import { CreateFromTemplateDialogComponent } from './dialogs/node-template/create-from-template.dialog';
 import { environment } from '../environments/environment';
 import { DetailsComponent } from './components/details/details.component';
+<<<<<<< HEAD
 import { ContentUrlService } from './services/content-url.service';
+=======
+//import { ContentUrlService } from './services/content-url.service';
+>>>>>>> master
 import { HomeComponent } from './components/home/home.component';
 
 import { registerLocaleData } from '@angular/common';
@@ -84,7 +88,17 @@ import localePl from '@angular/common/locales/pl';
 import localeFi from '@angular/common/locales/fi';
 import localeDa from '@angular/common/locales/da';
 import localeSv from '@angular/common/locales/sv';
+<<<<<<< HEAD
 
+=======
+import { ContentUrlService } from './services/content-url.service';
+import { GvaSearchComponent } from './components/gva-search/gva-search.component';
+import { GVASEARCHSERVICE } from '../../../projects/aca-shared/src/lib/services/gva-search.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { Interceptor } from './services/baseurl.interceptor';
+import { GvaSearchResultComponent } from './components/gva-search-result/gva-search-result.component';
+//projects\aca-shared\src\lib\services\gva-search.service.ts
+>>>>>>> master
 registerLocaleData(localeFr);
 registerLocaleData(localeDe);
 registerLocaleData(localeIt);
@@ -146,11 +160,23 @@ registerLocaleData(localeSv);
     RecentFilesComponent,
     SharedFilesComponent,
     CreateFromTemplateDialogComponent,
+<<<<<<< HEAD
     HomeComponent
   ],
   providers: [
     { provide: AppConfigService, useClass: DebugAppConfigService },
     { provide: ContentVersionService, useClass: ContentUrlService },
+=======
+    HomeComponent,
+    GvaSearchComponent,
+    GvaSearchResultComponent
+  ],
+  providers: [
+    GVASEARCHSERVICE,
+    { provide: AppConfigService, useClass: DebugAppConfigService },
+    { provide: ContentVersionService, useClass: ContentUrlService },
+    {provide: HTTP_INTERCEPTORS, useClass:Interceptor, multi: true},
+>>>>>>> master
     {
       provide: TRANSLATION_PROVIDER,
       multi: true,

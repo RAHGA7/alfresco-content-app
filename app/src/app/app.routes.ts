@@ -38,6 +38,10 @@ import { RecentFilesComponent } from './components/recent-files/recent-files.com
 import { SharedFilesComponent } from './components/shared-files/shared-files.component';
 import { DetailsComponent } from './components/details/details.component';
 import { HomeComponent } from './components/home/home.component';
+<<<<<<< HEAD
+=======
+import { GvaSearchComponent } from './components/gva-search/gva-search.component';
+>>>>>>> master
 
 export const APP_ROUTES: Routes = [
   {
@@ -263,6 +267,13 @@ export const APP_ROUTES: Routes = [
         ]
       },
       {
+<<<<<<< HEAD
+=======
+        path:"gvasearch",
+        component:GvaSearchComponent
+      },
+      {
+>>>>>>> master
         path: 'favorite',
         children: [
           {
@@ -478,6 +489,14 @@ export const APP_ROUTES: Routes = [
         loadChildren: () => import('./components/trashcan/trashcan.module').then((m) => m.AppTrashcanModule)
       },
       {
+<<<<<<< HEAD
+=======
+        path: 'extension',
+        loadChildren: () => import('./components/extension/extension.module').then((m) => m.AppExtensionModule)
+      },
+
+      {
+>>>>>>> master
         path: 'search',
         children: [
           {

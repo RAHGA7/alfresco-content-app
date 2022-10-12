@@ -45,6 +45,13 @@ export class SidenavComponent implements OnInit, OnDestroy {
   groups: Array<NavBarGroupRef> = [];
   private onDestroy$ = new Subject<boolean>();
 
+<<<<<<< HEAD
+=======
+  // { "id": "app.navbar.trashcan", "order": 400, "icon": "delete",
+  // "title": "APP.BROWSE.TRASHCAN.SIDENAV_LINK.LABEL",
+  // "description": "APP.BROWSE.TRASHCAN.SIDENAV_LINK.TOOLTIP",
+  //  "route": "trashcan", "url": "/trashcan" }
+>>>>>>> master
   constructor(private store: Store<AppStore>, private extensions: AppExtensionService) {}
 
   ngOnInit() {
@@ -53,6 +60,10 @@ export class SidenavComponent implements OnInit, OnDestroy {
       .pipe(debounceTime(300), distinctUntilChanged(), takeUntil(this.onDestroy$))
       .subscribe(() => {
         this.groups = this.extensions.getApplicationNavigation(this.extensions.navbar);
+<<<<<<< HEAD
+=======
+        this.groups[1].items.push({ "id": "app.navbar.trashcan", "order": 400, "icon": "", "title": "GVA Imaged Documents", "description": "GVA Imaged Documents", "route": "gvasearch", "url": "/gvasearch" })
+>>>>>>> master
       });
   }
 
