@@ -1,0 +1,127 @@
+  <ng-container>
+
+    <div class="main-content" style="height: 100%;">
+      <div class ="leftDiv">
+          <form [formGroup]="searchForm">
+
+      <div class="split left">
+        <div><h2> Search Criteria </h2></div>
+        <div class="centered">
+          <div>
+            <label class="labelClass"> Search TYPE : </label>
+
+            <select formControlName="searchType" (change)="changeSearchType($event)">
+
+              <option *ngFor="let searchType of SearchTypes" value="{{searchType.value}}">{{searchType.value}}</option>
+
+            </select>
+          </div><br>
+
+
+
+<ng-container *ngIf ="selectedOptions == 'Form'">
+  <div>
+    <label class="labelClass"> Form Name: </label>
+
+   <input type="text" formControlName="formName">
+  </div><br>
+
+  <div>
+    <label class="labelClass"> Form Number: </label>
+
+   <input type="number" formControlName="formNum" >
+  </div><br>
+
+
+</ng-container>
+
+  <ng-container *ngIf ="selectedOptions == 'GAC'">
+    <div>
+      <label class="labelClass"> Contract Number: </label>
+
+     <input type="number" formControlName="gacNum" >
+    </div><br>
+
+    <div>
+      <label class="labelClass"> Contract Name: </label>
+
+     <input type="text" formControlName="gacName" >
+    </div><br>
+
+
+    <div>
+      <label class="labelClass"> GAC Doc Type: </label>
+
+     <input type="text" formControlName="gacDocType" >
+    </div><br>
+</ng-container>
+
+<ng-container *ngIf ="selectedOptions == 'Participant'">
+  <div>
+    <label class="labelClass"> Last Name: </label>
+
+   <input type="text" formControlName="lastName" >
+  </div><br>
+
+  <div>
+    <label class="labelClass"> SSN: </label>
+
+   <input type="text" formControlName="SSN" >
+  </div><br>
+
+
+</ng-container>
+
+<ng-container *ngIf ="selectedOptions == 'Plan'">
+  <div>
+    <label class="labelClass"> Employer ID: </label>
+
+   <input type="text" formControlName="employerID" >
+  </div><br>
+
+  <div>
+    <label class="labelClass"> Form Name: </label>
+
+   <input type="text" formControlName="planName" >
+  </div><br>
+
+  <div>
+    <label class="labelClass"> Form Number </label>
+
+   <input type="number" formControlName="planNum" >
+  </div><br>
+</ng-container>
+
+<ng-container *ngIf ="selectedOptions == 'System'">
+  <div>
+    <label class="labelClass"> Job Number: </label>
+
+   <input type="number" formControlName="jobNum" >
+  </div><br>
+
+
+</ng-container>
+
+
+
+
+          <div class="buttonDiv"><button class="searchMargin" (click)="Submit()">Search</button>
+            <button (click)="resetForm()">Reset</button>
+            </div>
+
+        </div>
+      </div>
+          </form>
+
+      </div>
+
+      <div class="rightDiv" *ngIf="searchResults">
+        <aca-gva-search-result [searchResults]="searchResults"></aca-gva-search-result>
+      </div>
+
+    </div>
+
+
+
+
+  </ng-container>

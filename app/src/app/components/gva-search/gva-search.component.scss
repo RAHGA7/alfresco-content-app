@@ -1,0 +1,64 @@
+/* Control the left side
+.split {
+  height: 100%;
+  width: 50%;
+  position: relative;
+  z-index: 1;
+  top: 0;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+
+.left {
+  left: 0;
+  background-color: rgba(211, 211, 211, 0.911);
+}*/
+
+/* Control the right side */
+.right {
+  right: 0;
+ // background-color: red;
+}
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+  position: relative;
+  top: 5%;
+  left: 10%;
+  //transform: translate(-50%, -50%);
+
+}
+
+/* Style the image inside the centered container, if needed */
+.centered img {
+  width: 150px;
+  border-radius: 50%;
+}
+
+.buttonDiv {
+  padding-left: 60%;
+}
+.searchMargin {
+margin-right : 20px;
+}
+
+.labelClass {
+  width:30% !important;
+  display: inline-block;
+}
+
+
+.leftDiv {
+  display: inline;
+    float: left;
+    /* background: blue; */
+    width: 50%;
+}
+
+.rightDiv {
+  float: right;
+  display: inline;
+  /* background: red; */
+  width: 50%;
+}
